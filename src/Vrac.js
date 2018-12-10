@@ -11,9 +11,9 @@ const CacheRemove = {};
 
 export default class Vrac {
     constructor({
-        baseUrl: '/',
-        only: ['index', 'create', 'read', 'update', 'destroy'],
-        identifier: 'id',
+        baseUrl = '/',
+        only = ['index', 'create', 'read', 'update', 'destroy'],
+        identifier = 'id',
     }) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
@@ -76,10 +76,10 @@ export default class Vrac {
     }
 
     createCall(name, {
-        method: 'get',
-        parser: ParseSingle,
-        cacher: CacheSingle,
-        identified: false,
+        method = 'get',
+        parser = ParseSingle,
+        cacher = CacheSingle,
+        identified = false,
     }) {
         this.calls.push({
             name,
