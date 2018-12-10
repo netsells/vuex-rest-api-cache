@@ -1,1 +1,3 @@
-export default {};
+import Vrac from '~/Vrac';
+
+export default Vrac;
