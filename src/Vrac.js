@@ -112,14 +112,14 @@ class Vrac {
 
     get mutations() {
         return {
-            createOrUpdate(state, model) {
+            createOrUpdate: (state, model) => {
                 state.index = [
                     ...state.index.filter(m => m[this.identifier] !== model[this.identifier]),
                     model,
                 ];
             },
 
-            destroy(state, model) {
+            destroy: (state, model) => {
                 state.index = state.index.filter(
                     m => m[this.identifier] !== model[this.identifier]
                 );
@@ -129,15 +129,11 @@ class Vrac {
 
     get getters() {
         return {
-            index(state) {
-                return state.index;
-            },
+            index: (state) => state.index,
 
-            read(state, getters) {
-                return identifier => getters.index.find(
-                    m => m[this.identifier] === identifier
-                );
-            },
+            read: (state, getters) => identifier => getters.index.find(
+                m => m[this.identifier] === identifier
+            ),
         };
     }
 
@@ -160,7 +156,7 @@ class Vrac {
                 const response = await axios.request({
                     method: call.method,
                     url: this.getUrl(fields),
-                    data: ['post', 'put', 'patch'].includes(method.toLowerCase()) ? fields : undefined,
+                    data: ['post', 'put', 'patch'].includes(call.method.toLowerCase()) ? fields : undefined,
                     params,
                 });
 

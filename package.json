@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test-api": "babel-node spec/server.js",
-    "jest": "jest",
+    "jest": "jest --watch",
     "test": "start-server-and-test test-api http://localhost:3000 jest"
   },
   "author": "Sam Boylett",
@@ -26,7 +26,8 @@
   "jest": {
     "moduleNameMapper": {
       "^~/(.+)$": "<rootDir>/src/$1.js"
-    }
+    },
+    "testEnvironment": "node"
   },
   "dependencies": {
     "axios": "^0.18.0"

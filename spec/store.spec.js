@@ -1,5 +1,6 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import axios from 'axios';
 
 import Vrac from '~/index';
 
@@ -34,19 +35,26 @@ describe('store', () => {
 
             describe('when called properly', () => {
                 let models;
+                let responseModels;
 
-                beforeEach(() => {
-                    models = store.dispatch('index');
-                });
-
-                it('returns the indexed items', () => {
-                    expect(models).toEqual([{
+                beforeEach(async () => {
+                    responseModels = [{
                         id: 1,
                         name: 'Thing 1',
                     }, {
-                        id: 1,
+                        id: 2,
                         name: 'Stuff 2',
-                    }]);
+                    }];
+
+                    models = await store.dispatch('index');
+                });
+
+                it('returns the indexed items', () => {
+                    expect(models).toEqual(responseModels);
+                });
+
+                it('caches the items in the store', () => {
+                    expect(store.state.index).toEqual(responseModels);
                 });
             });
         });
