@@ -27,7 +27,11 @@
     "moduleNameMapper": {
       "^~/(.+)$": "<rootDir>/src/$1.js"
     },
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.js"
+    ]
   },
   "dependencies": {
     "axios": "^0.18.0"
