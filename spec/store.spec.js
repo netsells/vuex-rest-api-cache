@@ -10,7 +10,9 @@ describe('store', () => {
     let store;
 
     beforeEach(() => {
-        vrac = new Vrac();
+        vrac = new Vrac({
+            baseUrl: 'http://localhost:3000',
+        });
         store = new Vuex.Store(vrac.store);
     });
 
@@ -31,19 +33,21 @@ describe('store', () => {
             });
 
             describe('when called properly', () => {
-                let promise;
+                let models;
 
                 beforeEach(() => {
-                    promise = store.dispatch('index');
+                    models = store.dispatch('index');
                 });
 
-                // it('calls axios', () => {
-                //     expect(mockAxios.request).toHaveBeenCalledWith({
-                //         method: 'get',
-                //         url: '/',
-                //         params: {},
-                //     });
-                // });
+                it('returns the indexed items', () => {
+                    expect(models).toEqual([{
+                        id: 1,
+                        name: 'Thing 1',
+                    }, {
+                        id: 1,
+                        name: 'Stuff 2',
+                    }]);
+                });
             });
         });
     });
