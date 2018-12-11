@@ -1,12 +1,14 @@
 import axios from 'axios';
-import parseMultiple from './parsers/multiple';
-import parseSingle from './parsers/single';
-import parseNone from './parsers/none';
 
-import cacheMultiple from './cachers/multiple';
-import cacheSingle from './cachers/single';
-import cacheNone from './cachers/none';
-import cacheDestroy from './cachers/destroy';
+import {
+    parseNone,
+    parseSingle,
+    parseMultiple,
+    cacheMultiple,
+    cacheSingle,
+    cacheNone,
+    cacheDestroy,
+} from '~/index';
 
 class Vrac {
     constructor({
