@@ -89,7 +89,7 @@ class Vrac {
         method = 'get',
         parser = parseSingle,
         cacher = cacheSingle,
-        identified = true,
+        identified = false,
     }) {
         this.calls.push({
             name,
@@ -149,11 +149,15 @@ class Vrac {
                 fields = {},
                 params = {},
             } = {}) => {
-                if (call.identified && !fields[this.identifier]) {
-                    throw new Error(`The '${call.name}' action requires a 'fields.${this.identifier}' option`);
+                if (call.identified) {
+                    if (!fields[this.identifier]) {
+                        throw new Error(`The '${call.name}' action requires a 'fields.${this.identifier}' option`);
+                    }
+                } else if (fields[this.identifier]) {
+                    throw new Error(`The '${call.name}' action can not be used with the 'fields.${this.identifier}' option`);
                 }
 
-                const response = await axios({
+                const response = await axios.request({
                     method: call.method,
                     url: this.getUrl(fields),
                     data: ['post', 'put', 'patch'].includes(method.toLowerCase()) ? fields : undefined,
