@@ -100,6 +100,10 @@ class Vrac {
         });
     }
 
+    get modules() {
+        return {};
+    }
+
     get state() {
         return {
             index: [],
@@ -165,6 +169,12 @@ class Vrac {
         });
 
         return actions;
+    }
+
+    get store() {
+        const { actions, getters, mutations, state, modules } = this;
+
+        return { actions, getters, mutations, state, modules };
     }
 }
 

@@ -50,6 +50,25 @@ describe('Vrac', () => {
                 });
             });
         });
+
+        describe('actions', () => {
+            let actions;
+
+            beforeEach(() => {
+                actions = instance.actions;
+            });
+
+            it('exports all the calls as actions', () => {
+                const names = Object.keys(actions);
+
+                expect(names.length).toBe(5);
+                expect(names).toContain('index');
+                expect(names).toContain('create');
+                expect(names).toContain('read');
+                expect(names).toContain('update');
+                expect(names).toContain('destroy');
+            });
+        });
     });
 
     describe('child instance', () => {
