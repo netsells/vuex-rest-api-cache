@@ -62,20 +62,24 @@ class Vrac {
         }
     }
 
-    getUrl(fields) {
+    getUrl(fields = {}) {
         let url = this.baseUrl;
-        const reqFields = url.match(/\:([a-z,_]+)/gi).map(s => s.slice(1));
+        const reqFields = (url.match(/\:([a-z,_]+)/gi) || []).map(s => s.slice(1));
 
-        Object.keys(reqFields).forEach(field => {
+        reqFields.forEach(field => {
             if (fields[field] === undefined) {
-                throw new Error(`You must pass the ${field} field`);
+                throw new Error(`You must pass the '${field}' field`);
             }
 
             url = url.replace(`:${field}`, fields[field]);
         })
 
         if (fields[this.identifier]) {
-            url += `/${fields[this.identifier]}`;
+            if (url.slice(-1)[0] !== '/') {
+                url += '/';
+            }
+
+            url += fields[this.identifier];
         }
 
         return url;
