@@ -13,7 +13,7 @@ class Vrac {
         baseUrl = '/',
         only = ['index', 'create', 'read', 'update', 'destroy'],
         identifier = 'id',
-    }) {
+    } = {}) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
         this.calls = [];
@@ -141,7 +141,6 @@ class Vrac {
                 fields = {},
                 params = {},
             } = {}) => {
-
                 if (call.identified && !fields[this.identifier]) {
                     throw new Error(`The '${call.name}' action requires a 'fields.${this.identifier}' option`);
                 }
