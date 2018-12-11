@@ -1,15 +1,14 @@
 import axios from 'axios';
+import parseMultiple from './parsers/multiple';
+import parseSingle from './parsers/single';
+import parseNone from './parsers/none';
 
-const ParseSingle = {};
-const ParseMultiple = {};
-const ParseNone = {};
+import cacheMultiple from './cachers/multiple';
+import cacheSingle from './cachers/single';
+import cacheNone from './cachers/none';
+import cacheDestroy from './cachers/destroy';
 
-const CacheSingle = {};
-const CacheMultiple = {};
-const CacheNone = {};
-const CacheRemove = {};
-
-export default class Vrac {
+class Vrac {
     constructor({
         baseUrl = '/',
         only = ['index', 'create', 'read', 'update', 'destroy'],
@@ -21,23 +20,25 @@ export default class Vrac {
 
         if (only.includes('index')) {
             this.createCall('index', {
-                parser: ParseMultiple,
-                cacher: CacheMultiple,
+                parser: parseMultiple,
+                cacher: cacheMultiple,
+                identified: false,
             });
         }
 
         if (only.includes('create')) {
             this.createCall('create', {
                 method: 'post',
-                parser: ParseSingle,
-                cacher: CacheSingle,
+                parser: parseSingle,
+                cacher: cacheSingle,
+                identified: false,
             });
         }
 
         if (only.includes('read')) {
             this.createCall('read', {
-                parser: ParseSingle,
-                cacher: CacheSingle,
+                parser: parseSingle,
+                cacher: cacheSingle,
                 identified: true,
             });
         }
@@ -45,8 +46,8 @@ export default class Vrac {
         if (only.includes('update')) {
             this.createCall('update', {
                 method: 'patch',
-                parser: ParseSingle,
-                cacher: CacheSingle,
+                parser: parseSingle,
+                cacher: cacheSingle,
                 identified: true,
             });
         }
@@ -54,8 +55,8 @@ export default class Vrac {
         if (only.includes('destroy')) {
             this.createCall('destroy', {
                 method: 'delete',
-                parser: ParseNone,
-                cacher: CacheRemove,
+                parser: parseNone,
+                cacher: cacheDestroy,
                 identified: true,
             });
         }
@@ -63,10 +64,15 @@ export default class Vrac {
 
     getUrl(fields) {
         let url = this.baseUrl;
+        const reqFields = url.match(/\:([a-z,_]+)/gi).map(s => s.slice(1));
 
-        Object.keys(fields).forEach(key => {
-            url = url.replace(`[:${key}]`, fields[key]);
-        });
+        Object.keys(reqFields).forEach(field => {
+            if (fields[field] === undefined) {
+                throw new Error(`You must pass the ${field} field`);
+            }
+
+            url = url.replace(`:${field}`, fields[field]);
+        })
 
         if (fields[this.identifier]) {
             url += `/${fields[this.identifier]}`;
@@ -77,9 +83,9 @@ export default class Vrac {
 
     createCall(name, {
         method = 'get',
-        parser = ParseSingle,
-        cacher = CacheSingle,
-        identified = false,
+        parser = parseSingle,
+        cacher = cacheSingle,
+        identified = true,
     }) {
         this.calls.push({
             name,
@@ -90,6 +96,43 @@ export default class Vrac {
         });
     }
 
+    get state() {
+        return {
+            index: [],
+        };
+    }
+
+    get mutations() {
+        return {
+            createOrUpdate(state, model) {
+                state.index = [
+                    ...state.index.filter(m => m[this.identifier] !== model[this.identifier]),
+                    model,
+                ];
+            },
+
+            destroy(state, model) {
+                state.index = state.index.filter(
+                    m => m[this.identifier] !== model[this.identifier]
+                );
+            },
+        };
+    }
+
+    get getters() {
+        return {
+            index(state) {
+                return state.index;
+            },
+
+            read(state, getters) {
+                return identifier => getters.index.find(
+                    m => m[this.identifier] === identifier
+                );
+            },
+        };
+    }
+
     get actions() {
         const actions = {};
 
@@ -98,19 +141,28 @@ export default class Vrac {
                 fields = {},
                 params = {},
             } = {}) => {
+
                 if (call.identified && !fields[this.identifier]) {
-                    throw new Error(`This method requires a fields.${this.identifier} option`);
+                    throw new Error(`The '${call.name}' action requires a 'fields.${this.identifier}' option`);
                 }
 
-                return await axios({
+                const response = await axios({
                     method: call.method,
                     url: this.getUrl(fields),
                     data: ['post', 'put', 'patch'].includes(method.toLowerCase()) ? fields : undefined,
                     params,
                 });
+
+                const parsed = call.parser(response.data);
+
+                call.cacher(context, parsed);
+
+                return parsed;
             };
         });
 
         return actions;
     }
 }
+
+export default Vrac;
