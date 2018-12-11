@@ -149,6 +149,10 @@ class Vrac {
                     if (!fields[this.identifier]) {
                         throw new Error(`The '${call.name}' action requires a 'fields.${this.identifier}' option`);
                     }
+
+                    const model = context.getters.read(fields[this.identifier]);
+
+                    if (model) return model;
                 } else if (fields[this.identifier]) {
                     throw new Error(`The '${call.name}' action can not be used with the 'fields.${this.identifier}' option`);
                 }
