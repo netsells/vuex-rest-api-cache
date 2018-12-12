@@ -15,10 +15,14 @@ describe('store', () => {
 
         vrac = new Vrac({
             baseUrl: 'http://localhost:3000',
-            children: [{
-                baseUrl: 'posts',
-                children: [new Vrac({ baseUrl: 'posts/:post_id/comments' })],
-            }],
+            children: {
+                posts: {
+                    baseUrl: 'posts',
+                    children: {
+                        comments: new Vrac({ baseUrl: 'posts/:post_id/comments' })
+                    },
+                }
+            },
         });
         store = new Vuex.Store(vrac.store);
     });
@@ -35,6 +39,76 @@ describe('store', () => {
 
     describe('children', () => {
         describe('index', () => {
+            describe('when called with id', () => {
+                it('throws an error', async () => {
+                    await expect(store.dispatch('posts/index', { fields: { id: 1 } })).rejects.toEqual(
+                        new Error("The 'index' action can not be used with the 'fields.id' option")
+                    );
+                });
+            });
+
+            // describe('when called properly', () => {
+            //     let models;
+            //     let responseModels;
+
+            //     beforeEach(async () => {
+            //         responseModels = [{
+            //             id: 1,
+            //             name: 'Thing 1',
+            //         }, {
+            //             id: 2,
+            //             name: 'Stuff 2',
+            //         }];
+
+            //         models = await store.dispatch('index');
+            //     });
+
+            //     it('returns the indexed items', () => {
+            //         expect(models).toEqual(responseModels);
+            //     });
+
+            //     it('caches the items in the store', () => {
+            //         expect(store.state.index).toEqual(responseModels);
+            //     });
+
+            //     describe('when called a second time', () => {
+            //         beforeEach(async () => {
+            //             models = await store.dispatch('index');
+            //         });
+
+            //         it('returns the models', () => {
+            //             expect(models).toEqual(responseModels);
+            //         });
+
+            //         it('updates the cache to the same models', () => {
+            //             expect(store.state.index).toEqual(responseModels);
+            //         });
+
+            //         it('submits a new request', () => {
+            //             expect(axios.request.mock.calls.length).toEqual(2);
+            //         });
+            //     });
+
+            //     describe('when calling read', () => {
+            //         let model;
+
+            //         beforeEach(async () => {
+            //             model = await store.dispatch('read', {
+            //                 fields: {
+            //                     id: 2,
+            //                 },
+            //             });
+            //         });
+
+            //         it('returns the model', () => {
+            //             expect(model).toEqual(responseModels[1]);
+            //         });
+
+            //         it('does not submit a new request', () => {
+            //             expect(axios.request.mock.calls.length).toEqual(1);
+            //         });
+            //     });
+            // });
         });
     });
 
