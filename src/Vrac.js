@@ -8,7 +8,24 @@ import {
     cacheDestroy,
 } from '~/index';
 
+/**
+ * Vuex Rest API Cacher class
+ *
+ * Generates Vuex stores based on the supplied config. The stores have actions
+ * for fetching API data, mutators for caching them and getters for accessing
+ * the cache.
+ */
 class Vrac {
+    /**
+     * Instantiate the class
+     *
+     * @param {Object} options
+     * @param {String} options.baseUrl - URL of the endpoint, without the models ID
+     * @param {Array<String>|String} options.only - Which actions to create for this model
+     * @param {Array<String>|String} options.except - Which actions not to create for this model
+     * @param {String} options.identifier - The identifier field, e.g. `id`
+     * @param {Object} options.children - Children for this module
+     */
     constructor({
         baseUrl = '/',
         only = ['index', 'create', 'read', 'update', 'destroy'],
@@ -67,6 +84,12 @@ class Vrac {
         }
     }
 
+    /**
+     * Get the URL using the baseUrl and the supplied fields
+     *
+     * @param {Object} fields
+     * @returns {String} endpoint
+     */
     getUrl(fields = {}) {
         let url = this.baseUrl;
         const reqFields = (url.match(/:([a-z,_]+)/gi) || []).map(s => s.slice(1));
@@ -90,6 +113,12 @@ class Vrac {
         return url;
     }
 
+    /**
+     * Add a child module to this model
+     *
+     * @param {String} name - Name of the child model
+     * @param {Object|Vrac} child - Vrac constructor options or Vrac object
+     */
     child(name, child) {
         this.children[name] =
             child instanceof Vrac
@@ -97,6 +126,17 @@ class Vrac {
                 : new Vrac(child);
     }
 
+    /**
+     * Create an action for an endpoint
+     *
+     * @param {String} name - Name of the action
+     * @param {Object} options
+     * @param {String} options.method - HTTP method for the call
+     * @param {Function} options.parser - Function used to parse the data from the API response
+     * @param {Function} options.cacher - Function used to cache the model from the response
+     * @param {Boolean} options.identified - Whether this endpoint needs an identifier field or not, e.g. `id`
+     * @param {Boolean} options.readCache - Whether this action should return from the cache if the model exists there
+     */
     createCall(name, {
         method = '',
         parser = parseMultiple,
@@ -114,6 +154,11 @@ class Vrac {
         });
     }
 
+    /**
+     * Get child modules for this store
+     *
+     * @returns {Object} modules
+     */
     get modules() {
         const modules = {};
 
@@ -124,12 +169,22 @@ class Vrac {
         return modules;
     }
 
+    /**
+     * Get the default state for this module
+     *
+     * @returns {Object} state
+     */
     get state() {
         return {
             index: [],
         };
     }
 
+    /**
+     * Get the mutators for this module
+     *
+     * @returns {Object} mutators
+     */
     get mutations() {
         return {
             createOrUpdate: (state, model) => {
@@ -147,6 +202,11 @@ class Vrac {
         };
     }
 
+    /**
+     * Get the getters for this module
+     *
+     * @returns {Object} getters
+     */
     get getters() {
         return {
             index: (state) => state.index,
@@ -157,6 +217,11 @@ class Vrac {
         };
     }
 
+    /**
+     * Get the actions for this module
+     *
+     * @returns {Object} actions
+     */
     get actions() {
         const actions = {};
 
@@ -210,6 +275,11 @@ class Vrac {
         return actions;
     }
 
+    /**
+     * Get the entire store for this module, for Vuex
+     *
+     * @returns {Object} store
+     */
     get store() {
         const { actions, getters, mutations, state, modules } = this;
 
