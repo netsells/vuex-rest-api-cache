@@ -14,10 +14,14 @@ class Vrac {
         only = ['index', 'create', 'read', 'update', 'destroy'],
         except = [],
         identifier = 'id',
+        children = {},
     } = {}) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
         this.calls = [];
+        this.children = {};
+
+        Object.keys(children).forEach(c => this.child(c, children[c]));
 
         const onlyCalls = Array.isArray(only) ? only : [only];
         const includeCalls = onlyCalls.filter(n => !except.includes(n));
@@ -90,6 +94,13 @@ class Vrac {
         return url;
     }
 
+    child(name, child) {
+        this.children[name] =
+            child instanceof Vrac
+                ? child
+                : new Vrac(child);
+    }
+
     createCall(name, {
         method = 'get',
         parser = parseMultiple,
@@ -108,7 +119,13 @@ class Vrac {
     }
 
     get modules() {
-        return {};
+        const modules = {};
+
+        Object.keys(this.children).forEach(name => {
+            modules[name] = this.children[name].store;
+        });
+
+        return modules;
     }
 
     get state() {
@@ -200,7 +217,14 @@ class Vrac {
     get store() {
         const { actions, getters, mutations, state, modules } = this;
 
-        return { actions, getters, mutations, state, modules };
+        return {
+            namespaced: true,
+            actions,
+            getters,
+            mutations,
+            state,
+            modules
+        };
     }
 }
 

@@ -15,6 +15,10 @@ describe('store', () => {
 
         vrac = new Vrac({
             baseUrl: 'http://localhost:3000',
+            children: [{
+                baseUrl: 'posts',
+                children: [new Vrac({ baseUrl: 'posts/:post_id/comments' })],
+            }],
         });
         store = new Vuex.Store(vrac.store);
     });
@@ -24,8 +28,13 @@ describe('store', () => {
     });
 
     it('sets the state', () => {
-        expect(store.state).toEqual({
+        expect(store.state).toEqual(expect.objectContaining({
             index: [],
+        }));
+    });
+
+    describe('children', () => {
+        describe('index', () => {
         });
     });
 
