@@ -177,7 +177,7 @@ class Vrac {
     get state() {
         return {
             index: [],
-            actionsLoading: [],
+            actionsLoading: {},
         };
     }
 
@@ -199,6 +199,16 @@ class Vrac {
                 state.index = state.index.filter(
                     m => m[this.identifier] !== model[this.identifier]
                 );
+            },
+
+            loading: (state, action) => {
+                state.actionsLoading[action] =
+                    (state.actionsLoading[action] || 0) + 1;
+            },
+
+            loaded: (state, action) => {
+                state.actionsLoading[action] =
+                    state.actionsLoading[action] - 1;
             },
         };
     }
@@ -258,18 +268,24 @@ class Vrac {
                     data = Object.assign({}, fields);
                 }
 
-                const response = await axios.request({
-                    url: this.getUrl(fields),
-                    method,
-                    data,
-                    params,
-                });
+                context.commit('loading', call.name);
 
-                const parsed = call.parser(response.data, fields);
+                try {
+                    const response = await axios.request({
+                        url: this.getUrl(fields),
+                        method,
+                        data,
+                        params,
+                    });
 
-                call.cacher(context, parsed);
+                    const parsed = call.parser(response.data, fields);
 
-                return parsed;
+                    call.cacher(context, parsed);
+
+                    return parsed;
+                } finally {
+                    context.commit('loaded', call.name);
+                }
             };
         });
 

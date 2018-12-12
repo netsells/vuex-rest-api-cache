@@ -41,13 +41,13 @@ describe('store', () => {
         it('sets the childrens state', () => {
             expect(store.state).toEqual({
                 index: [],
-                actionsLoading: [],
+                actionsLoading: {},
                 posts: {
                     index: [],
-                    actionsLoading: [],
+                    actionsLoading: {},
                     comments: {
                         index: [],
-                        actionsLoading: [],
+                        actionsLoading: {},
                     },
                 },
             });
@@ -179,6 +179,23 @@ describe('store', () => {
                 it('does not submit a new request', () => {
                     expect(axios.request.mock.calls.length).toEqual(0);
                 });
+            });
+        });
+    });
+
+    describe('state', () => {
+        describe('actionsLoading', () => {
+            it('is an empty object by default', () => {
+                expect(store.state.actionsLoading).toEqual({});
+            });
+
+            it('sets the key to the number of actions loading', done => {
+                store.dispatch('index').then(() => {
+                    expect(store.state.actionsLoading).toEqual({ index: 0 });
+                    done();
+                });
+
+                expect(store.state.actionsLoading).toEqual({ index: 1 });
             });
         });
     });
