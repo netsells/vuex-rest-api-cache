@@ -112,6 +112,10 @@ describe('store', () => {
                         expect(models).toEqual(responseModels);
                     });
 
+                    it('updates the cache to the same models', () => {
+                        expect(store.state.index).toEqual(responseModels);
+                    });
+
                     it('submits a new request', () => {
                         expect(axios.request.mock.calls.length).toEqual(2);
                     });
