@@ -8,6 +8,57 @@ describe('Vrac', () => {
         expect(Vrac.name).toBe('Vrac');
     });
 
+    describe('only index', () => {
+        beforeEach(() => {
+            instance = new Vrac({
+                only: ['index'],
+            });
+        });
+
+        it('creates the index call only', () => {
+            expect(instance.calls.length).toBe(1);
+
+            const names = instance.calls.map(({ name }) => name);
+
+            expect(names).toContain('index');
+        });
+    });
+
+    describe('only read no array', () => {
+        beforeEach(() => {
+            instance = new Vrac({
+                only: 'read',
+            });
+        });
+
+        it('creates the read call only', () => {
+            expect(instance.calls.length).toBe(1);
+
+            const names = instance.calls.map(({ name }) => name);
+
+            expect(names).toContain('read');
+        });
+    });
+
+    describe('except create', () => {
+        beforeEach(() => {
+            instance = new Vrac({
+                except: ['create'],
+            });
+        });
+
+        it('creates the defaults calls except create', () => {
+            expect(instance.calls.length).toBe(4);
+
+            const names = instance.calls.map(({ name }) => name);
+
+            expect(names).toContain('index');
+            expect(names).toContain('read');
+            expect(names).toContain('update');
+            expect(names).toContain('destroy');
+        });
+    });
+
     describe('standard instance', () => {
         beforeEach(() => {
             instance = new Vrac();

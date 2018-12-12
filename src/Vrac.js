@@ -14,13 +14,17 @@ class Vrac {
     constructor({
         baseUrl = '/',
         only = ['index', 'create', 'read', 'update', 'destroy'],
+        except = [],
         identifier = 'id',
     } = {}) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
         this.calls = [];
 
-        if (only.includes('index')) {
+        const onlyCalls = Array.isArray(only) ? only : [only];
+        const includeCalls = onlyCalls.filter(n => !except.includes(n));
+
+        if (includeCalls.includes('index')) {
             this.createCall('index', {
                 parser: parseMultiple,
                 cacher: cacheMultiple,
@@ -28,7 +32,7 @@ class Vrac {
             });
         }
 
-        if (only.includes('create')) {
+        if (includeCalls.includes('create')) {
             this.createCall('create', {
                 method: 'post',
                 parser: parseSingle,
@@ -37,7 +41,7 @@ class Vrac {
             });
         }
 
-        if (only.includes('read')) {
+        if (includeCalls.includes('read')) {
             this.createCall('read', {
                 parser: parseSingle,
                 cacher: cacheSingle,
@@ -45,7 +49,7 @@ class Vrac {
             });
         }
 
-        if (only.includes('update')) {
+        if (includeCalls.includes('update')) {
             this.createCall('update', {
                 method: 'patch',
                 parser: parseSingle,
@@ -54,7 +58,7 @@ class Vrac {
             });
         }
 
-        if (only.includes('destroy')) {
+        if (includeCalls.includes('destroy')) {
             this.createCall('destroy', {
                 method: 'delete',
                 parser: parseNone,
