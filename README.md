@@ -1,6 +1,7 @@
 # Vuex Rest API Cache
 
 [![Build Status](https://travis-ci.org/netsells/vuex-rest-api-cache.svg?branch=master)](https://travis-ci.org/netsells/vuex-rest-api-cache)
+[![codecov](https://codecov.io/gh/netsells/vuex-rest-api-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/netsells/vuex-rest-api-cache)
 
 ### Vuex Rest API action creator and model cacher
 
