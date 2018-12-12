@@ -5,8 +5,10 @@
   "main": "src/index.js",
   "scripts": {
     "test-api": "babel-node spec/server.js",
-    "jest": "jest --watch",
-    "test": "start-server-and-test test-api http://localhost:3000 jest"
+    "jest": "jest",
+    "jest:watch": "jest --watch",
+    "test": "start-server-and-test test-api http://localhost:3000 jest",
+    "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch"
   },
   "author": "Sam Boylett",
   "license": "ISC",
