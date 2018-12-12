@@ -124,5 +124,51 @@ describe('store', () => {
                 });
             });
         });
+
+        describe('update', () => {
+            describe('when called without id', () => {
+                it('throws an error', async () => {
+                    await expect(store.dispatch('update')).rejects.toEqual(
+                        new Error("The 'update' action requires a 'fields.id' option")
+                    );
+                });
+            });
+
+            describe('when called properly', () => {
+                let model;
+                let responseModel;
+
+                beforeEach(async () => {
+                    responseModel = {
+                        id: 2,
+                        name: 'Updated stuff',
+                    };
+
+                    model = await store.dispatch('update', { fields: { id: 2, name: 'Updated stuff' } });
+                });
+
+                it('returns the model', () => {
+                    expect(model).toEqual(responseModel);
+                });
+
+                it('caches the item in the store', () => {
+                    expect(store.state.index).toEqual([responseModel]);
+                });
+
+                describe('when calling read for same model', () => {
+                    beforeEach(async () => {
+                        model = await store.dispatch('read', { fields: { id: 2 } });
+                    });
+
+                    it('returns the model', () => {
+                        expect(model).toEqual(responseModel);
+                    });
+
+                    it('does not submit a new request', () => {
+                        expect(axios.request.mock.calls.length).toEqual(1);
+                    });
+                });
+            });
+        });
     });
 });
