@@ -8,7 +8,8 @@
     "jest": "jest",
     "jest:watch": "jest --watch",
     "test": "start-server-and-test test-api http://localhost:3000 jest",
-    "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch"
+    "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch",
+    "stryker": "stryker"
   },
   "author": "Sam Boylett <sam.boylett@netsells.co.uk>",
   "license": "ISC",
@@ -22,6 +23,12 @@
     "jest": "^23.6.0",
     "regenerator-runtime": "^0.13.1",
     "start-server-and-test": "^1.7.11",
+    "stryker": "^0.33.1",
+    "stryker-api": "^0.22.0",
+    "stryker-babel-transpiler": "^0.7.10",
+    "stryker-html-reporter": "^0.16.9",
+    "stryker-javascript-mutator": "^0.12.1",
+    "stryker-jest-runner": "^1.2.9",
     "vue": "^2.5.20",
     "vuex": "^3.0.1"
   },
