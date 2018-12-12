@@ -55,4 +55,4 @@ app.get('/posts/2/comments/2', (req, res) => res.send(JSON.stringify({
     name: 'Comment 2',
 })));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port);

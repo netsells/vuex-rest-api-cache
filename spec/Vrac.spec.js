@@ -135,7 +135,7 @@ describe('Vrac', () => {
 
         describe('getUrl', () => {
             it('throws an error', () => {
-                expect(() => instance.getUrl()).toThrow(new Error("You must pass the 'post_id' field"));
+                expect(() => instance.getUrl()).toThrow(new Error('You must pass the \'post_id\' field'));
             });
 
             describe('when passed the needed field', () => {
