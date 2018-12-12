@@ -21,6 +21,11 @@ app.patch('/2', (req, res) => res.send(JSON.stringify({
     name: 'Updated stuff',
 })));
 
+app.put('/2', (req, res) => res.send(JSON.stringify({
+    id: 2,
+    name: 'Updated stuff',
+})));
+
 app.post('/', (req, res) => res.send(JSON.stringify({
     id: 3,
     name: 'New stuff',

@@ -151,6 +151,7 @@ class Vrac {
             actions[call.name] = async (context, {
                 fields = {},
                 params = {},
+                method,
             } = {}) => {
                 if (call.identified) {
                     if (!fields[this.identifier]) {
@@ -183,7 +184,7 @@ class Vrac {
                 }
 
                 const response = await axios.request({
-                    method: call.method,
+                    method: method || call.method,
                     url: this.getUrl(fields),
                     data,
                     params,

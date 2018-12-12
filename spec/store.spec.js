@@ -215,6 +215,26 @@ describe('store', () => {
                     });
                 });
             });
+
+            describe('when called with method', () => {
+                let model;
+                let responseModel;
+
+                beforeEach(async () => {
+                    responseModel = {
+                        id: 2,
+                        name: 'Updated stuff',
+                    };
+
+                    model = await store.dispatch('update', { fields: { id: 2, name: 'Updated stuff' }, method: 'PUT' });
+                });
+
+                it('sends the fields as data with the request except the identifier', () => {
+                    expect(axios.request).toHaveBeenCalledWith(expect.objectContaining({
+                        data: { name: 'Updated stuff' },
+                    }));
+                });
+            });
         });
 
         describe('create', () => {
