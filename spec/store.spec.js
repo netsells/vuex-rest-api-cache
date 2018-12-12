@@ -116,6 +116,26 @@ describe('store', () => {
                         expect(axios.request.mock.calls.length).toEqual(2);
                     });
                 });
+
+                describe('when calling read', () => {
+                    let model;
+
+                    beforeEach(async () => {
+                        model = await store.dispatch('read', {
+                            fields: {
+                                id: 2,
+                            },
+                        });
+                    });
+
+                    it('returns the model', () => {
+                        expect(model).toEqual(responseModels[1]);
+                    });
+
+                    it('does not submit a new request', () => {
+                        expect(axios.request.mock.calls.length).toEqual(1);
+                    });
+                });
             });
         });
 
