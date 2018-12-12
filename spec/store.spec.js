@@ -41,10 +41,13 @@ describe('store', () => {
         it('sets the childrens state', () => {
             expect(store.state).toEqual({
                 index: [],
+                actionsLoading: [],
                 posts: {
                     index: [],
+                    actionsLoading: [],
                     comments: {
                         index: [],
+                        actionsLoading: [],
                     },
                 },
             });

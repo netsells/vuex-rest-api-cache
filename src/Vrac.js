@@ -177,6 +177,7 @@ class Vrac {
     get state() {
         return {
             index: [],
+            actionsLoading: [],
         };
     }
 
