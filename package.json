@@ -7,9 +7,10 @@
     "test-api": "babel-node spec/server.js",
     "jest": "jest",
     "jest:watch": "jest --watch",
+    "jest:mutate": "stryker run",
     "test": "start-server-and-test test-api http://localhost:3000 jest",
     "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch",
-    "stryker": "stryker"
+    "test:mutate": "start-server-and-test test-api http://localhost:3000 jest:mutate"
   },
   "author": "Sam Boylett <sam.boylett@netsells.co.uk>",
   "license": "ISC",
