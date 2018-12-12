@@ -11,7 +11,7 @@
     "test": "start-server-and-test test-api http://localhost:3000 jest",
     "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch",
     "test:mutate": "start-server-and-test test-api http://localhost:3000 jest:mutate",
-    "lint:js": "eslint src"
+    "lint:js": "eslint src --max-warnings 0"
   },
   "author": "Sam Boylett <sam.boylett@netsells.co.uk>",
   "license": "ISC",
