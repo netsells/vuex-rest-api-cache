@@ -11,7 +11,9 @@
     "test": "start-server-and-test test-api http://localhost:3000 jest",
     "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch",
     "test:mutate": "start-server-and-test test-api http://localhost:3000 jest:mutate",
-    "lint:js": "eslint src --max-warnings 0"
+    "lint:js": "eslint src --max-warnings 0",
+    "lint:spec": "eslint spec --config .spec.eslintrc",
+    "lint": "yarn lint:js && yarn lint:spec"
   },
   "author": "Sam Boylett <sam.boylett@netsells.co.uk>",
   "license": "ISC",
@@ -21,6 +23,7 @@
     "babel-jest": "^23.6.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
+    "eslint-plugin-jest": "^22.1.2",
     "express": "^4.16.4",
     "jest": "^23.6.0",
     "regenerator-runtime": "^0.13.1",

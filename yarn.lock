@@ -1701,6 +1701,11 @@ escodegen@~1.8.0:
   optionalDependencies:
     source-map "~0.2.0"
 
+eslint-plugin-jest@^22.1.2:
+  version "22.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jest/-/eslint-plugin-jest-22.1.2.tgz#1ea36cc3faedbdb788e702ca633d635ca14e91e8"
+  integrity sha512-jSPT4rVmNetkeCIyrvvOM0wJtgoUSbKHIUDoOGzIISsg51eWN/nISPNKVM+jXMMDI9oowbyapOnpKSXlsLiDpQ==
+
 eslint-plugin-require-jsdoc-except@^1.1.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-require-jsdoc-except/-/eslint-plugin-require-jsdoc-except-1.3.0.tgz#43bd939efac3d54bfc66c63ad9a0209843ac0fbe"
