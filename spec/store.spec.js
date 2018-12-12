@@ -187,6 +187,12 @@ describe('store', () => {
                     model = await store.dispatch('update', { fields: { id: 2, name: 'Updated stuff' } });
                 });
 
+                it('sends the fields as data with the request except the identifier', () => {
+                    expect(axios.request).toHaveBeenCalledWith(expect.objectContaining({
+                        data: { name: 'Updated stuff' },
+                    }));
+                });
+
                 it('returns the model', () => {
                     expect(model).toEqual(responseModel);
                 });
@@ -231,6 +237,12 @@ describe('store', () => {
                     };
 
                     model = await store.dispatch('create', { fields: { name: 'New stuff' } });
+                });
+
+                it('sends the fields as data with the request', () => {
+                    expect(axios.request).toHaveBeenCalledWith(expect.objectContaining({
+                        data: { name: 'New stuff' },
+                    }));
                 });
 
                 it('returns the model', () => {

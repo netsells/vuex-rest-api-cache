@@ -172,10 +172,20 @@ class Vrac {
                     }
                 }
 
+                let data = undefined;
+
+                if (['post', 'put', 'patch'].includes(call.method.toLowerCase())) {
+                    data = { ...fields };
+
+                    if (call.identified) {
+                        delete data[this.identifier];
+                    }
+                }
+
                 const response = await axios.request({
                     method: call.method,
                     url: this.getUrl(fields),
-                    data: ['post', 'put', 'patch'].includes(call.method.toLowerCase()) ? fields : undefined,
+                    data,
                     params,
                 });
 
