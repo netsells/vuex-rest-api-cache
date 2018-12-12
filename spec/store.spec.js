@@ -356,13 +356,15 @@ describe('store', () => {
                 });
             });
 
-            describe('when calling read first', () => {
+            describe('when calling index first', () => {
+                let otherModel;
+
                 beforeEach(async () => {
-                    await store.dispatch('read', { fields: { id: 2 } });
+                    [otherModel] = await store.dispatch('index');
                 });
 
                 it('caches the item in the store', () => {
-                    expect(store.state.index).toEqual([responseModel]);
+                    expect(store.state.index).toEqual([otherModel, responseModel]);
                 });
 
                 describe('when calling destroy', () => {
@@ -375,7 +377,7 @@ describe('store', () => {
                     });
 
                     it('removes item from the store', () => {
-                        expect(store.state.index).toEqual([]);
+                        expect(store.state.index).toEqual([otherModel]);
                     });
                 });
             });
