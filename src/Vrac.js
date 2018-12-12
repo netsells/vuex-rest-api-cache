@@ -5,7 +5,6 @@ import {
     parseMultiple,
     cacheMultiple,
     cacheSingle,
-    cacheNone,
     cacheDestroy,
 } from '~/index';
 
@@ -93,8 +92,8 @@ class Vrac {
 
     createCall(name, {
         method = 'get',
-        parser = parseSingle,
-        cacher = cacheSingle,
+        parser = parseMultiple,
+        cacher = cacheMultiple,
         identified = false,
         readCache = false,
     }) {

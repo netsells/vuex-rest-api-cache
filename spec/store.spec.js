@@ -2,10 +2,7 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import axios from 'axios';
 
-import Vrac, {
-    parseMultiple,
-    cacheMultiple,
-} from '~/index';
+import Vrac from '~/index';
 
 Vue.use(Vuex);
 
@@ -36,8 +33,6 @@ describe('store', () => {
         describe('cachable index', () => {
             beforeEach(() => {
                 vrac.createCall('cachableIndex', {
-                    parser: parseMultiple,
-                    cacher: cacheMultiple,
                     readCache: true,
                 });
 
