@@ -69,15 +69,15 @@ class Vrac {
 
     getUrl(fields = {}) {
         let url = this.baseUrl;
-        const reqFields = (url.match(/\:([a-z,_]+)/gi) || []).map(s => s.slice(1));
+        const reqFields = (url.match(/:([a-z,_]+)/gi) || []).map(s => s.slice(1));
 
         reqFields.forEach(field => {
             if (fields[field] === undefined) {
-                throw new Error(`You must pass the '${field}' field`);
+                throw new Error(`You must pass the '${ field }' field`);
             }
 
-            url = url.replace(`:${field}`, fields[field]);
-        })
+            url = url.replace(`:${ field }`, fields[field]);
+        });
 
         if (fields[this.identifier]) {
             if (url.slice(-1)[0] !== '/') {
@@ -161,24 +161,24 @@ class Vrac {
         const actions = {};
 
         this.calls.forEach(call => {
-            actions[call.name] = async (context, {
+            actions[call.name] = async(context, {
                 fields = {},
                 params = {},
                 method = call.method,
             } = {}) => {
                 if (call.identified) {
                     if (!fields[this.identifier]) {
-                        throw new Error(`The '${call.name}' action requires a 'fields.${this.identifier}' option`);
+                        throw new Error(`The '${ call.name }' action requires a 'fields.${ this.identifier }' option`);
                     }
 
                     if (call.readCache) {
                         const model = context.getters.read(fields[this.identifier]);
 
-                        if (model) return model;
+                        if (model) {return model;}
                     }
                 } else {
                     if (fields[this.identifier]) {
-                        throw new Error(`The '${call.name}' action can not be used with the 'fields.${this.identifier}' option`);
+                        throw new Error(`The '${ call.name }' action can not be used with the 'fields.${ this.identifier }' option`);
                     }
 
                     if (call.readCache) {
@@ -219,7 +219,7 @@ class Vrac {
             getters,
             mutations,
             state,
-            modules
+            modules,
         };
     }
 }

@@ -10,7 +10,8 @@
     "jest:mutate": "stryker run",
     "test": "start-server-and-test test-api http://localhost:3000 jest",
     "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch",
-    "test:mutate": "start-server-and-test test-api http://localhost:3000 jest:mutate"
+    "test:mutate": "start-server-and-test test-api http://localhost:3000 jest:mutate",
+    "lint:js": "eslint src"
   },
   "author": "Sam Boylett <sam.boylett@netsells.co.uk>",
   "license": "ISC",
@@ -52,6 +53,8 @@
     }
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "@netsells/eslint-config": "^1.8.0",
+    "axios": "^0.18.0",
+    "eslint": "^4.10.0"
   }
 }
