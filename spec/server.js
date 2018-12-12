@@ -21,4 +21,9 @@ app.patch('/2', (req, res) => res.send(JSON.stringify({
     name: 'Updated stuff',
 })));
 
+app.post('/', (req, res) => res.send(JSON.stringify({
+    id: 3,
+    name: 'New stuff',
+})));
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

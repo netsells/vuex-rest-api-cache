@@ -170,5 +170,51 @@ describe('store', () => {
                 });
             });
         });
+
+        describe('create', () => {
+            describe('when called with an id', () => {
+                it('throws an error', async () => {
+                    await expect(store.dispatch('create', { fields: { id: 4 } })).rejects.toEqual(
+                        new Error("The 'create' action can not be used with the 'fields.id' option")
+                    );
+                });
+            });
+
+            describe('when called properly', () => {
+                let model;
+                let responseModel;
+
+                beforeEach(async () => {
+                    responseModel = {
+                        id: 3,
+                        name: 'New stuff',
+                    };
+
+                    model = await store.dispatch('create', { fields: { name: 'New stuff' } });
+                });
+
+                it('returns the model', () => {
+                    expect(model).toEqual(responseModel);
+                });
+
+                it('caches the item in the store', () => {
+                    expect(store.state.index).toEqual([responseModel]);
+                });
+
+                describe('when calling read for same model', () => {
+                    beforeEach(async () => {
+                        model = await store.dispatch('read', { fields: { id: 3 } });
+                    });
+
+                    it('returns the model', () => {
+                        expect(model).toEqual(responseModel);
+                    });
+
+                    it('does not submit a new request', () => {
+                        expect(axios.request.mock.calls.length).toEqual(1);
+                    });
+                });
+            });
+        });
     });
 });
