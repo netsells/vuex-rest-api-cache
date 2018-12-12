@@ -198,6 +198,18 @@ describe('store', () => {
 
                 expect(store.state.actionsLoading).toEqual({ index: 1 });
             });
+
+            it('keeps increasing the index as actions are triggered', done => {
+                const promises = [];
+
+                promises.push(store.dispatch('index'));
+                expect(store.state.actionsLoading).toEqual({ index: 1 });
+
+                promises.push(store.dispatch('index'));
+                expect(store.state.actionsLoading).toEqual({ index: 2 });
+
+                Promise.all(promises).then(() => done());
+            });
         });
     });
 

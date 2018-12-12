@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/netsells/vuex-rest-api-cache.svg?branch=master)](https://travis-ci.org/netsells/vuex-rest-api-cache)
 [![codecov](https://codecov.io/gh/netsells/vuex-rest-api-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/netsells/vuex-rest-api-cache)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d8741c7400b54067b52fb8f2c2745a1f)](https://www.codacy.com/app/samboylett/vuex-rest-api-cache?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=netsells/vuex-rest-api-cache&amp;utm_campaign=Badge_Grade)
 
 ### Vuex Rest API action creator and model cacher
 

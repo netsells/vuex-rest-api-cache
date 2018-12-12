@@ -202,17 +202,19 @@ class Vrac {
             },
 
             loading: (state, action) => {
-                state.actionsLoading = {
-                    ...state.actionsLoading,
-                    [action]: (state.actionsLoading[action] || 0) + 1,
-                };
+                state.actionsLoading = Object.assign(
+                    {},
+                    state.actionsLoading,
+                    { [action]: (state.actionsLoading[action] || 0) + 1 }
+                );
             },
 
             loaded: (state, action) => {
-                state.actionsLoading = {
-                    ...state.actionsLoading,
-                    [action]: state.actionsLoading[action] - 1,
-                };
+                state.actionsLoading = Object.assign(
+                    {},
+                    state.actionsLoading,
+                    { [action]: state.actionsLoading[action] - 1 }
+                );
             },
         };
     }
