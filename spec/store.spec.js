@@ -295,6 +295,20 @@ describe('store', () => {
                 });
             });
 
+            describe('when api does not return model', () => {
+                beforeEach(async () => {
+                    model = await store.dispatch('destroy', { fields: { id: 2 }, params: { noModel: 1 } });
+                });
+
+                it('returns the fields only', () => {
+                    expect(model).toEqual({ id: 2 });
+                });
+
+                it('does not cache the item in the store', () => {
+                    expect(store.state.index).toEqual([]);
+                });
+            });
+
             describe('when calling read first', () => {
                 beforeEach(async () => {
                     await store.dispatch('read', { fields: { id: 2 } });
