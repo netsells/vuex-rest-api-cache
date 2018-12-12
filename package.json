@@ -1,7 +1,7 @@
 {
-  "name": "vuex-rest-api-cache",
+  "name": "@netsells/vuex-rest-api-cache",
   "version": "1.0.0",
-  "description": "",
+  "description": "Vuex Rest API action creator and cacher",
   "main": "src/index.js",
   "scripts": {
     "test-api": "babel-node spec/server.js",
@@ -10,7 +10,7 @@
     "test": "start-server-and-test test-api http://localhost:3000 jest",
     "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch"
   },
-  "author": "Sam Boylett",
+  "author": "Sam Boylett <sam.boylett@netsells.co.uk>",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -33,7 +33,15 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "<rootDir>/src/**/*.js"
-    ]
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   },
   "dependencies": {
     "axios": "^0.18.0"
