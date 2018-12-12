@@ -7,6 +7,11 @@ module.exports = function(config) {
     transpilers: ["babel"],
     coverageAnalysis: "off",
     mutate: ["src/**/*.js"],
-    babelrcFile: ".babelrc"
+    babelrcFile: ".babelrc",
+    thresholds: {
+        break: 100,
+        high: 100,
+        low: 99,
+    },
   });
 };

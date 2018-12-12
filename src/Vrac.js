@@ -27,11 +27,7 @@ class Vrac {
         const includeCalls = onlyCalls.filter(n => !except.includes(n));
 
         if (includeCalls.includes('index')) {
-            this.createCall('index', {
-                parser: parseMultiple,
-                cacher: cacheMultiple,
-                identified: false,
-            });
+            this.createCall('index');
         }
 
         if (includeCalls.includes('create')) {
@@ -102,12 +98,12 @@ class Vrac {
     }
 
     createCall(name, {
-        method = 'get',
+        method = '',
         parser = parseMultiple,
         cacher = cacheMultiple,
         identified = false,
         readCache = false,
-    }) {
+    } = {}) {
         this.calls.push({
             name,
             method,
