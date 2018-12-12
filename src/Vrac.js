@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 import {
-    parseNone,
     parseSingle,
     parseMultiple,
     cacheMultiple,
@@ -46,6 +45,7 @@ class Vrac {
                 parser: parseSingle,
                 cacher: cacheSingle,
                 identified: true,
+                readCache: true,
             });
         }
 
@@ -61,7 +61,7 @@ class Vrac {
         if (includeCalls.includes('destroy')) {
             this.createCall('destroy', {
                 method: 'delete',
-                parser: parseNone,
+                parser: parseSingle,
                 cacher: cacheDestroy,
                 identified: true,
             });
@@ -96,6 +96,7 @@ class Vrac {
         parser = parseSingle,
         cacher = cacheSingle,
         identified = false,
+        readCache = false,
     }) {
         this.calls.push({
             name,
@@ -103,6 +104,7 @@ class Vrac {
             parser,
             cacher,
             identified,
+            readCache,
         });
     }
 
@@ -156,11 +158,19 @@ class Vrac {
                         throw new Error(`The '${call.name}' action requires a 'fields.${this.identifier}' option`);
                     }
 
-                    const model = context.getters.read(fields[this.identifier]);
+                    if (call.readCache) {
+                        const model = context.getters.read(fields[this.identifier]);
 
-                    if (model) return model;
-                } else if (fields[this.identifier]) {
-                    throw new Error(`The '${call.name}' action can not be used with the 'fields.${this.identifier}' option`);
+                        if (model) return model;
+                    }
+                } else {
+                    if (fields[this.identifier]) {
+                        throw new Error(`The '${call.name}' action can not be used with the 'fields.${this.identifier}' option`);
+                    }
+
+                    if (call.readCache) {
+                        return context.getters.index;
+                    }
                 }
 
                 const response = await axios.request({
@@ -170,7 +180,7 @@ class Vrac {
                     params,
                 });
 
-                const parsed = call.parser(response.data);
+                const parsed = call.parser(response.data, fields);
 
                 call.cacher(context, parsed);
 

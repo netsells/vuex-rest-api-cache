@@ -216,5 +216,63 @@ describe('store', () => {
                 });
             });
         });
+
+        describe('destroy', () => {
+            let model;
+            let responseModel;
+
+            beforeEach(() => {
+                responseModel = {
+                    id: 2,
+                    name: 'Stuff 2',
+                };
+            });
+
+            describe('when called without id', () => {
+                it('throws an error', async () => {
+                    await expect(store.dispatch('destroy')).rejects.toEqual(
+                        new Error("The 'destroy' action requires a 'fields.id' option")
+                    );
+                });
+            });
+
+            describe('when called properly', () => {
+                beforeEach(async () => {
+                    model = await store.dispatch('destroy', { fields: { id: 2 } });
+                });
+
+                it('returns the model', () => {
+                    expect(model).toEqual(responseModel);
+                });
+
+                it('does not cache the item in the store', () => {
+                    expect(store.state.index).toEqual([]);
+                });
+            });
+
+            describe('when calling read first', () => {
+                beforeEach(async () => {
+                    await store.dispatch('read', { fields: { id: 2 } });
+                });
+
+                it('caches the item in the store', () => {
+                    expect(store.state.index).toEqual([responseModel]);
+                });
+
+                describe('when calling destroy', () => {
+                    beforeEach(async () => {
+                        model = await store.dispatch('destroy', { fields: { id: 2 } });
+                    });
+
+                    it('returns the model', () => {
+                        expect(model).toEqual(responseModel);
+                    });
+
+                    it('removes item from the store', () => {
+                        expect(store.state.index).toEqual([]);
+                    });
+                });
+            });
+        });
     });
 });
