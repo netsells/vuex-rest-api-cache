@@ -2,7 +2,10 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import axios from 'axios';
 
-import Vrac from '~/index';
+import Vrac, {
+    parseMultiple,
+    cacheMultiple,
+} from '~/index';
 
 Vue.use(Vuex);
 
@@ -26,6 +29,48 @@ describe('store', () => {
     it('sets the state', () => {
         expect(store.state).toEqual({
             index: [],
+        });
+    });
+
+    describe('custom calls', () => {
+        describe('cachable index', () => {
+            beforeEach(() => {
+                vrac.createCall('cachableIndex', {
+                    parser: parseMultiple,
+                    cacher: cacheMultiple,
+                    readCache: true,
+                });
+
+                store = new Vuex.Store(vrac.store);
+            });
+
+            describe('when called with id', () => {
+                it('throws an error', async () => {
+                    await expect(store.dispatch('cachableIndex', { fields: { id: 1 } })).rejects.toEqual(
+                        new Error("The 'cachableIndex' action can not be used with the 'fields.id' option")
+                    );
+                });
+            });
+
+            describe('when called properly', () => {
+                let models;
+                let responseModels;
+
+                beforeEach(async () => {
+                    responseModels = [{ id: 5, name: 'foo' }];
+                    store.state.index = responseModels;
+
+                    models = await store.dispatch('cachableIndex');
+                });
+
+                it('returns the cached items', () => {
+                    expect(models).toEqual(responseModels);
+                });
+
+                it('does not submit a new request', () => {
+                    expect(axios.request.mock.calls.length).toEqual(0);
+                });
+            });
         });
     });
 
