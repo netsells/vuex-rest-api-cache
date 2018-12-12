@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/netsells/vuex-rest-api-cache.svg?branch=master)](https://travis-ci.org/netsells/vuex-rest-api-cache)
 
-Vuex Rest API action creator and model cacher
+### Vuex Rest API action creator and model cacher
+
+This module makes it easier to create Vuex store actions for communicating with
 
 ## Installation
 
@@ -38,6 +40,9 @@ This includes usage examples for root models (e.g. `/api/v1/posts`) and for chil
 
 ### Index
 
+Get a list of models from the API. Will cache each model. Will always create a
+new API request instead of using the cache.
+
 ```javascript
 const posts = await this.$store.dispatch('posts/index');
 
@@ -50,6 +55,9 @@ const comments = await this.$store.dispatch('posts/comments/index', {
 
 ### Create
 
+Create a model. Will cache the model returned by the API. Will always create a
+new API request.
+
 ```javascript
 const post = await this.$store.dispatch('posts/create', {
     fields: {
@@ -61,6 +69,68 @@ const comment = await this.$store.dispatch('posts/comments/create', {
     fields: {
         post_id: post.id,
         message: 'Foo bar',
+    },
+});
+```
+
+### Read
+
+Read a model. Will cache the model returned by the API. Will always use a cached
+model over reading from the API.
+
+```javascript
+const post = await this.$store.dispatch('posts/read', {
+    fields: {
+        id: 45,
+    },
+});
+
+const comment = await this.$store.dispatch('posts/comments/read', {
+    fields: {
+        post_id: post.id,
+        id: 3,
+    },
+});
+```
+
+### Update
+
+Update a model. Will cache the model returned by the API. Will always create a
+new API request.
+
+```javascript
+const post = await this.$store.dispatch('posts/update', {
+    fields: {
+        id: 45,
+        text: 'Bar foo',
+    },
+});
+
+const comment = await this.$store.dispatch('posts/comments/update', {
+    fields: {
+        post_id: post.id,
+        id: 3,
+        message: 'Hello world',
+    },
+});
+```
+
+### Destroy
+
+Destroy a model. Will remove the model from the cache. Will always create a
+new API request.
+
+```javascript
+await this.$store.dispatch('posts/destroy', {
+    fields: {
+        id: 45,
+    },
+});
+
+await this.$store.dispatch('posts/comments/destroy', {
+    fields: {
+        post_id: post.id,
+        id: 3,
     },
 });
 ```
