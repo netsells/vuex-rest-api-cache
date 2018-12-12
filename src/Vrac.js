@@ -168,7 +168,7 @@ class Vrac {
             actions[call.name] = async (context, {
                 fields = {},
                 params = {},
-                method,
+                method = call.method,
             } = {}) => {
                 if (call.identified) {
                     if (!fields[this.identifier]) {
@@ -192,13 +192,13 @@ class Vrac {
 
                 let data = undefined;
 
-                if (['post', 'put', 'patch'].includes(call.method.toLowerCase())) {
+                if (['post', 'put', 'patch'].includes(method.toLowerCase())) {
                     data = Object.assign({}, fields);
                 }
 
                 const response = await axios.request({
-                    method: method || call.method,
                     url: this.getUrl(fields),
+                    method,
                     data,
                     params,
                 });

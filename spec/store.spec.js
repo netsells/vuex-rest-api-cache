@@ -367,7 +367,13 @@ describe('store', () => {
                         name: 'Updated stuff',
                     };
 
-                    model = await store.dispatch('update', { fields: { id: 2, name: 'Updated stuff' }, method: 'PUT' });
+                    model = await store.dispatch('update', {
+                        fields: {
+                            id: 2,
+                            name: 'Updated stuff'
+                        },
+                        method: 'PUT'
+                    });
                 });
 
                 it('sends the fields as data with the request except the identifier', () => {
