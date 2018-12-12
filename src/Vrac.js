@@ -176,7 +176,7 @@ class Vrac {
                 let data = undefined;
 
                 if (['post', 'put', 'patch'].includes(call.method.toLowerCase())) {
-                    data = { ...fields };
+                    data = Object.assign({}, fields);
 
                     if (call.identified) {
                         delete data[this.identifier];
