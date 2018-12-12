@@ -173,6 +173,12 @@ describe('store', () => {
                     expect(store.state.index).toEqual([responseModel]);
                 });
 
+                it('does not send the fields as data', () => {
+                    expect(axios.request).toHaveBeenCalledWith(expect.objectContaining({
+                        data: undefined,
+                    }));
+                });
+
                 describe('when called a second time', () => {
                     beforeEach(async () => {
                         model = await store.dispatch('read', { fields: { id: 2 } });
@@ -213,7 +219,7 @@ describe('store', () => {
 
                 it('sends the fields as data with the request except the identifier', () => {
                     expect(axios.request).toHaveBeenCalledWith(expect.objectContaining({
-                        data: { name: 'Updated stuff' },
+                        data: { id: 2, name: 'Updated stuff' },
                     }));
                 });
 
@@ -255,7 +261,7 @@ describe('store', () => {
 
                 it('sends the fields as data with the request except the identifier', () => {
                     expect(axios.request).toHaveBeenCalledWith(expect.objectContaining({
-                        data: { name: 'Updated stuff' },
+                        data: { id: 2, name: 'Updated stuff' },
                     }));
                 });
             });

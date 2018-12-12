@@ -177,10 +177,6 @@ class Vrac {
 
                 if (['post', 'put', 'patch'].includes(call.method.toLowerCase())) {
                     data = Object.assign({}, fields);
-
-                    if (call.identified) {
-                        delete data[this.identifier];
-                    }
                 }
 
                 const response = await axios.request({
