@@ -9,6 +9,7 @@ jobs:
     - stage: test
       script:
         - yarn run test
-    - stage: mutate
-      script:
         - yarn run test:mutate
+    - stage: build
+      script:
+        - yarn run build
