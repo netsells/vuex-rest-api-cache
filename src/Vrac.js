@@ -202,13 +202,17 @@ class Vrac {
             },
 
             loading: (state, action) => {
-                state.actionsLoading[action] =
-                    (state.actionsLoading[action] || 0) + 1;
+                state.actionsLoading = {
+                    ...state.actionsLoading,
+                    [action]: (state.actionsLoading[action] || 0) + 1,
+                };
             },
 
             loaded: (state, action) => {
-                state.actionsLoading[action] =
-                    state.actionsLoading[action] - 1;
+                state.actionsLoading = {
+                    ...state.actionsLoading,
+                    [action]: state.actionsLoading[action] - 1,
+                };
             },
         };
     }
@@ -220,11 +224,15 @@ class Vrac {
      */
     get getters() {
         return {
-            index: (state) => state.index,
+            index: ({ index }) => index,
 
             read: (state, getters) => identifier => getters.index.find(
                 m => m[this.identifier] === identifier
             ),
+
+            loading: ({ actionsLoading }) => {
+                return Object.keys(actionsLoading).some(k => actionsLoading[k]);
+            },
         };
     }
 
@@ -270,22 +278,24 @@ class Vrac {
 
                 context.commit('loading', call.name);
 
+                let response;
+
                 try {
-                    const response = await axios.request({
+                    response = await axios.request({
                         url: this.getUrl(fields),
                         method,
                         data,
                         params,
                     });
-
-                    const parsed = call.parser(response.data, fields);
-
-                    call.cacher(context, parsed);
-
-                    return parsed;
                 } finally {
                     context.commit('loaded', call.name);
                 }
+
+                const parsed = call.parser(response.data, fields);
+
+                call.cacher(context, parsed);
+
+                return parsed;
             };
         });
 

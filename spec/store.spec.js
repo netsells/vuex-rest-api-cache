@@ -192,10 +192,29 @@ describe('store', () => {
             it('sets the key to the number of actions loading', done => {
                 store.dispatch('index').then(() => {
                     expect(store.state.actionsLoading).toEqual({ index: 0 });
+
                     done();
                 });
 
                 expect(store.state.actionsLoading).toEqual({ index: 1 });
+            });
+        });
+    });
+
+    describe('getters', () => {
+        describe('loading', () => {
+            it('is false by default', () => {
+                expect(store.getters.loading).toEqual(false);
+            });
+
+            it('is true while something is loading', done => {
+                store.dispatch('index').then(() => {
+                    expect(store.getters.loading).toEqual(false);
+
+                    done();
+                });
+
+                expect(store.getters.loading).toEqual(true);
             });
         });
     });
