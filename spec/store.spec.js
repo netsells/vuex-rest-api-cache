@@ -17,9 +17,9 @@ describe('store', () => {
             baseUrl: 'http://localhost:3000',
             children: {
                 posts: {
-                    baseUrl: 'posts',
+                    baseUrl: 'http://localhost:3000/posts',
                     children: {
-                        comments: new Vrac({ baseUrl: 'posts/:post_id/comments' })
+                        comments: new Vrac({ baseUrl: 'http://localhost:3000/posts/:post_id/comments' })
                     },
                 }
             },
@@ -38,6 +38,17 @@ describe('store', () => {
     });
 
     describe('children', () => {
+        it('sets the childrens state', () => {
+            expect(store.state).toEqual({
+                index: [],
+                posts: {
+                    index: [],
+                    comments: {
+                        index: [],
+                    },
+                },
+            });
+        });
         describe('index', () => {
             describe('when called with id', () => {
                 it('throws an error', async () => {
@@ -47,68 +58,85 @@ describe('store', () => {
                 });
             });
 
-            // describe('when called properly', () => {
-            //     let models;
-            //     let responseModels;
+            describe('when called without a parent id', () => {
+                it('throws an error', async () => {
+                    await expect(store.dispatch('posts/comments/index')).rejects.toEqual(
+                        new Error("You must pass the 'post_id' field")
+                    );
+                });
+            });
 
-            //     beforeEach(async () => {
-            //         responseModels = [{
-            //             id: 1,
-            //             name: 'Thing 1',
-            //         }, {
-            //             id: 2,
-            //             name: 'Stuff 2',
-            //         }];
+            describe('when called properly', () => {
+                let models;
+                let responseModels;
 
-            //         models = await store.dispatch('index');
-            //     });
+                beforeEach(async () => {
+                    responseModels = [{
+                        id: 1,
+                        name: 'Comment 1',
+                    }, {
+                        id: 2,
+                        name: 'Comment 2',
+                    }];
 
-            //     it('returns the indexed items', () => {
-            //         expect(models).toEqual(responseModels);
-            //     });
+                    models = await store.dispatch('posts/comments/index', {
+                        fields: {
+                            post_id: 2,
+                        },
+                    });
+                });
 
-            //     it('caches the items in the store', () => {
-            //         expect(store.state.index).toEqual(responseModels);
-            //     });
+                it('returns the indexed items', () => {
+                    expect(models).toEqual(responseModels);
+                });
 
-            //     describe('when called a second time', () => {
-            //         beforeEach(async () => {
-            //             models = await store.dispatch('index');
-            //         });
+                it('caches the items in the store', () => {
+                    expect(store.state.posts.comments.index).toEqual(responseModels);
+                });
 
-            //         it('returns the models', () => {
-            //             expect(models).toEqual(responseModels);
-            //         });
+                describe('when called a second time', () => {
+                    beforeEach(async () => {
+                        models = await store.dispatch('posts/comments/index', {
+                            fields: {
+                                post_id: 2,
+                            },
+                        });
+                    });
 
-            //         it('updates the cache to the same models', () => {
-            //             expect(store.state.index).toEqual(responseModels);
-            //         });
+                    it('returns the models', () => {
+                        expect(models).toEqual(responseModels);
+                    });
 
-            //         it('submits a new request', () => {
-            //             expect(axios.request.mock.calls.length).toEqual(2);
-            //         });
-            //     });
+                    it('updates the cache to the same models', () => {
+                        expect(store.state.posts.comments.index).toEqual(responseModels);
+                    });
 
-            //     describe('when calling read', () => {
-            //         let model;
+                    it('submits a new request', () => {
+                        expect(axios.request.mock.calls.length).toEqual(2);
+                    });
+                });
 
-            //         beforeEach(async () => {
-            //             model = await store.dispatch('read', {
-            //                 fields: {
-            //                     id: 2,
-            //                 },
-            //             });
-            //         });
+                describe('when calling read', () => {
+                    let model;
 
-            //         it('returns the model', () => {
-            //             expect(model).toEqual(responseModels[1]);
-            //         });
+                    beforeEach(async () => {
+                        model = await store.dispatch('posts/comments/read', {
+                            fields: {
+                                post_id: 2,
+                                id: 2,
+                            },
+                        });
+                    });
 
-            //         it('does not submit a new request', () => {
-            //             expect(axios.request.mock.calls.length).toEqual(1);
-            //         });
-            //     });
-            // });
+                    it('returns the model', () => {
+                        expect(model).toEqual(responseModels[1]);
+                    });
+
+                    it('does not submit a new request', () => {
+                        expect(axios.request.mock.calls.length).toEqual(1);
+                    });
+                });
+            });
         });
     });
 
