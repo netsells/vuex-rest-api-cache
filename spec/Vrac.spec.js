@@ -11,7 +11,7 @@ describe('Vrac', () => {
 
     describe('requestAdapter', () => {
         beforeEach(() => {
-            jest.spyOn(axios, 'request').mockImplementation(() => ({}));
+            jest.spyOn(axios, 'request').mockImplementation(() => Promise.resolve({}));
         });
 
         it('calls axios with the passed params', () => {
@@ -39,6 +39,10 @@ describe('Vrac', () => {
                     Vrac.requestAdapter = function(params, context) {
                         called = true;
                         self = this;
+
+                        return Promise.resolve({
+                            data: [],
+                        });
                     };
 
                     jest.spyOn(Vrac, 'requestAdapter');
