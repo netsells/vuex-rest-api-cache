@@ -16,6 +16,15 @@ import {
  * the cache.
  */
 class Vrac {
+    /**
+     * Allows you to change the request function to something else (e.g. to add
+     * authorization headers) or to use a different HTTP library entirely. The
+     * function context (`this`) is set to the same of the Vuex action.
+     *
+     * @param {Object} requestParams - Request params for `axios.request`
+     * @param {Object} context - Context of the Vuex action
+     * @returns {Promise<Object>} - The result of the request
+     */
     static requestAdapter(requestParams) {
         return axios.request(requestParams);
     }

@@ -36,7 +36,7 @@ describe('Vrac', () => {
                     called = false;
                     oldRequestAdapter = Vrac.requestAdapter;
 
-                    Vrac.requestAdapter = function(params, context) {
+                    Vrac.requestAdapter = function() {
                         called = true;
                         self = this;
 
@@ -57,7 +57,7 @@ describe('Vrac', () => {
                     let jsContext;
 
                     beforeEach(() => {
-                        storeContext = { commit: () => {} };
+                        storeContext = { commit: () => ({}) };
                         jsContext = { js: 'context' };
 
                         instance.actions.index.call(jsContext, storeContext);
