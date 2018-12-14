@@ -136,3 +136,16 @@ await this.$store.dispatch('posts/comments/destroy', {
     },
 });
 ```
+
+### Changing the HTTP Requests
+
+Vrac sends all HTTP requests through `Vrac.requestAdapter`. By default, this
+passes the params straight through to `axios.request`. By overriding this
+function, you can either modify the request (e.g. to add authorization headers)
+or use a completely different HTTP library.
+
+```javascript
+Vrac.requestAdapter = function(requestParams) {
+    return axios.request(requestParams);
+};
+```
