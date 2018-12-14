@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Vrac from '~/index';
 
 describe('Vrac', () => {
@@ -6,6 +7,73 @@ describe('Vrac', () => {
     it('exports Vrac', () => {
         expect(Vrac).toBeDefined();
         expect(Vrac.name).toBe('Vrac');
+    });
+
+    describe('requestAdapter', () => {
+        beforeEach(() => {
+            jest.spyOn(axios, 'request').mockImplementation(() => ({}));
+        });
+
+        it('calls axios with the passed params', () => {
+            const requestParams = { foo: 'bar' };
+            Vrac.requestAdapter(requestParams);
+            expect(axios.request).toHaveBeenCalledWith(requestParams);
+        });
+
+        describe('when instantiated', () => {
+            beforeEach(() => {
+                instance = new Vrac({
+                    baseUrl: '/',
+                });
+            });
+
+            describe('when requestAdapter changed', () => {
+                let self;
+                let called;
+                let oldRequestAdapter;
+
+                beforeEach(() => {
+                    called = false;
+                    oldRequestAdapter = Vrac.requestAdapter;
+
+                    Vrac.requestAdapter = function(params, context) {
+                        called = true;
+                        self = this;
+                    };
+
+                    jest.spyOn(Vrac, 'requestAdapter');
+                });
+
+                afterEach(() => {
+                    Vrac.requestAdapter = oldRequestAdapter;
+                });
+
+                describe('when index called', () => {
+                    let storeContext;
+                    let jsContext;
+
+                    beforeEach(() => {
+                        storeContext = { commit: () => {} };
+                        jsContext = { js: 'context' };
+
+                        instance.actions.index.call(jsContext, storeContext);
+                    });
+
+                    it('calls the new requestAdapter', () => {
+                        expect(called).toBe(true);
+                    });
+
+                    it('calls the new requestAdapter with the store context', () => {
+                        expect(Vrac.requestAdapter)
+                            .toHaveBeenCalledWith(expect.any(Object), storeContext);
+                    });
+
+                    it('calls the new requestAdapter with the store function context', () => {
+                        expect(self).toBe(jsContext);
+                    });
+                });
+            });
+        });
     });
 
     describe('only index', () => {

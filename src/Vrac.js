@@ -16,6 +16,10 @@ import {
  * the cache.
  */
 class Vrac {
+    static requestAdapter(requestParams) {
+        return axios.request(requestParams);
+    }
+
     /**
      * Instantiate the class
      *
@@ -245,26 +249,27 @@ class Vrac {
      */
     get actions() {
         const actions = {};
+        const self = this;
 
         this.calls.forEach(call => {
-            actions[call.name] = async(context, {
+            actions[call.name] = async function(context, {
                 fields = {},
                 params = {},
                 method = call.method,
-            } = {}) => {
+            } = {}) {
                 if (call.identified) {
-                    if (!fields[this.identifier]) {
-                        throw new Error(`The '${ call.name }' action requires a 'fields.${ this.identifier }' option`);
+                    if (!fields[self.identifier]) {
+                        throw new Error(`The '${ call.name }' action requires a 'fields.${ self.identifier }' option`);
                     }
 
                     if (call.readCache) {
-                        const model = context.getters.read(fields[this.identifier]);
+                        const model = context.getters.read(fields[self.identifier]);
 
                         if (model) {return model;}
                     }
                 } else {
-                    if (fields[this.identifier]) {
-                        throw new Error(`The '${ call.name }' action can not be used with the 'fields.${ this.identifier }' option`);
+                    if (fields[self.identifier]) {
+                        throw new Error(`The '${ call.name }' action can not be used with the 'fields.${ self.identifier }' option`);
                     }
 
                     if (call.readCache) {
@@ -283,12 +288,12 @@ class Vrac {
                 let response;
 
                 try {
-                    response = await axios.request({
-                        url: this.getUrl(fields),
+                    response = await self.constructor.requestAdapter.call(this, {
+                        url: self.getUrl(fields),
                         method,
                         data,
                         params,
-                    });
+                    }, context);
                 } finally {
                     context.commit('loaded', call.name);
                 }
