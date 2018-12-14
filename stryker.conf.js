@@ -2,7 +2,7 @@ module.exports = function(config) {
   config.set({
     mutator: "javascript",
     packageManager: "yarn",
-    reporters: ["html", "progress"],
+    reporters: ["html", "progress", "dashboard"],
     testRunner: "jest",
     transpilers: ["babel"],
     coverageAnalysis: "off",
