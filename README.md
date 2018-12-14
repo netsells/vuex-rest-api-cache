@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/netsells/vuex-rest-api-cache.svg?branch=master)](https://travis-ci.org/netsells/vuex-rest-api-cache)
 [![codecov](https://codecov.io/gh/netsells/vuex-rest-api-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/netsells/vuex-rest-api-cache)
+[![Mutation testing badge](https://badge.stryker-mutator.io/github.com/netsells/vuex-rest-api-cache/master)](https://stryker-mutator.github.io)
 
 ### Vuex Rest API action creator and model cacher
 
