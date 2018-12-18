@@ -45,11 +45,20 @@ class Vrac {
         except = [],
         identifier = 'id',
         children = {},
+        modelHelpers = {},
     } = {}) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
         this.calls = [];
         this.children = {};
+
+        this.Model = class {
+            constructor(fields) {
+                Object.assign(this, fields);
+            }
+        };
+
+        Object.assign(this.Model.prototype, modelHelpers);
 
         Object.keys(children).forEach(c => this.child(c, children[c]));
 
@@ -168,6 +177,15 @@ class Vrac {
     }
 
     /**
+     * Instantiate a model class using the helpers if they exist
+     *
+     * @param {Object} fields
+     */
+    createModel(fields) {
+        return new this.Model(fields);
+    }
+
+    /**
      * Get child modules for this store
      *
      * @returns {Object} modules
@@ -239,7 +257,7 @@ class Vrac {
      */
     get getters() {
         return {
-            index: ({ index }) => index,
+            index: ({ index }) => index.map(m => this.createModel(m)),
 
             read: (state, getters) => identifier => getters.index.find(
                 m => m[this.identifier] === identifier

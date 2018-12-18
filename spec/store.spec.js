@@ -19,7 +19,14 @@ describe('store', () => {
                 posts: {
                     baseUrl: 'http://localhost:3000/posts',
                     children: {
-                        comments: new Vrac({ baseUrl: 'http://localhost:3000/posts/:post_id/comments' }),
+                        comments: new Vrac({
+                            baseUrl: 'http://localhost:3000/posts/:post_id/comments',
+                            modelHelpers: {
+                                toUpper() {
+                                    return this.name.toUpperCase();
+                                },
+                            },
+                        }),
                     },
                 },
             },
@@ -52,6 +59,7 @@ describe('store', () => {
                 },
             });
         });
+
         describe('index', () => {
             describe('when called with id', () => {
                 it('throws an error', async() => {
@@ -137,6 +145,10 @@ describe('store', () => {
 
                     it('does not submit a new request', () => {
                         expect(axios.request.mock.calls.length).toEqual(1);
+                    });
+
+                    it('supports the model helpers function', () => {
+                        expect(model.toUpper()).toEqual('COMMENT 2');
                     });
                 });
             });
