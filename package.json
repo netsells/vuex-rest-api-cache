@@ -41,6 +41,10 @@
     "vue": "^2.5.20",
     "vuex": "^3.0.1"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/netsells/vuex-rest-api-cache.git"
+  },
   "jest": {
     "moduleNameMapper": {
       "^~/(.+)$": "<rootDir>/src/$1.js"
