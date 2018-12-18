@@ -48,7 +48,7 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "^~/(.+)$": "<rootDir>/src/$1.js"
+      "^~/(.+)$": "<rootDir>/src/$1"
     },
     "testEnvironment": "node",
     "collectCoverage": true,

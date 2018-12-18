@@ -6,6 +6,7 @@
       "regenerator": true
     }],
     ["module-resolver", {
+      "extensions": [".js"],
       "alias": {
         "~(.+)": "./src/"
       }
