@@ -22,6 +22,11 @@ describe('store', () => {
                         comments: new Vrac({
                             baseUrl: 'http://localhost:3000/posts/:post_id/comments',
                             modelHelpers: {
+                                /**
+                                 * Get the upper case name
+                                 *
+                                 * @returns {String}
+                                 */
                                 toUpper() {
                                     return this.name.toUpperCase();
                                 },

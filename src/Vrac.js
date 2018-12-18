@@ -53,6 +53,11 @@ class Vrac {
         this.children = {};
 
         this.Model = class {
+            /**
+             * Instantiate the model
+             *
+             * @param {Object} fields
+             */
             constructor(fields) {
                 Object.assign(this, fields);
             }
@@ -180,6 +185,7 @@ class Vrac {
      * Instantiate a model class using the helpers if they exist
      *
      * @param {Object} fields
+     * @returns {this.Model} model
      */
     createModel(fields) {
         return new this.Model(fields);
