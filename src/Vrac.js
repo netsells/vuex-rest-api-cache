@@ -295,11 +295,11 @@ class Vrac {
                     data = Object.assign({}, fields);
                 }
 
-                context.commit('loading', call.name);
-
                 let response;
 
                 try {
+                    context.commit('loading', call.name);
+
                     response = await self.constructor.requestAdapter.call(this, {
                         url: self.getUrl(fields),
                         method,
