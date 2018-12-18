@@ -2,13 +2,28 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import axios from 'axios';
 
-import Vrac from '~/index';
+import Vrac, { BaseModel } from '~/index';
 
 Vue.use(Vuex);
 
 describe('store', () => {
     let vrac;
     let store;
+
+    class Comment extends BaseModel {
+        /**
+         * Get the upper case name
+         *
+         * @returns {String}
+         */
+        toUpper() {
+            return this.name.toUpperCase();
+        }
+
+        get idName() {
+            return `${this.id}/${this.name}`;
+        }
+    }
 
     beforeEach(() => {
         jest.spyOn(axios, 'request');
@@ -21,16 +36,7 @@ describe('store', () => {
                     children: {
                         comments: new Vrac({
                             baseUrl: 'http://localhost:3000/posts/:post_id/comments',
-                            modelHelpers: {
-                                /**
-                                 * Get the upper case name
-                                 *
-                                 * @returns {String}
-                                 */
-                                toUpper() {
-                                    return this.name.toUpperCase();
-                                },
-                            },
+                            Model: Comment,
                         }),
                     },
                 },
@@ -152,8 +158,12 @@ describe('store', () => {
                         expect(axios.request.mock.calls.length).toEqual(1);
                     });
 
-                    it('supports the model helpers function', () => {
+                    it('supports the model class function', () => {
                         expect(model.toUpper()).toEqual('COMMENT 2');
+                    });
+
+                    it('supports the model class getter', () => {
+                        expect(model.idName).toEqual('2/Comment 2');
                     });
                 });
             });

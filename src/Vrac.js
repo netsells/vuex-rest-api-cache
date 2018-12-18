@@ -6,6 +6,7 @@ import {
     cacheMultiple,
     cacheSingle,
     cacheDestroy,
+    BaseModel,
 } from '~/index';
 
 /**
@@ -45,25 +46,13 @@ class Vrac {
         except = [],
         identifier = 'id',
         children = {},
-        modelHelpers = {},
+        Model = BaseModel,
     } = {}) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
         this.calls = [];
         this.children = {};
-
-        this.Model = class {
-            /**
-             * Instantiate the model
-             *
-             * @param {Object} fields
-             */
-            constructor(fields) {
-                Object.assign(this, fields);
-            }
-        };
-
-        Object.assign(this.Model.prototype, modelHelpers);
+        this.Model = Model;
 
         Object.keys(children).forEach(c => this.child(c, children[c]));
 

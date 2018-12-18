@@ -6,6 +6,8 @@ import cacheMultiple from '~/cachers/multiple';
 import cacheSingle from '~/cachers/single';
 import cacheDestroy from '~/cachers/destroy';
 
+import BaseModel from '~/base-model';
+
 export default Vrac;
 export {
     parseSingle,
@@ -13,4 +15,5 @@ export {
     cacheMultiple,
     cacheSingle,
     cacheDestroy,
+    BaseModel,
 };
