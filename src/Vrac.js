@@ -275,7 +275,9 @@ class Vrac {
                     if (readCache) {
                         const model = context.getters.read(fields[self.identifier]);
 
-                        if (model) {return model;}
+                        if (model) {
+                            return model;
+                        }
                     }
                 } else {
                     if (fields[self.identifier]) {
