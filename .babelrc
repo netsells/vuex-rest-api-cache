@@ -4,6 +4,11 @@
     ["transform-runtime", {
       "polyfill": false,
       "regenerator": true
+    }],
+    ["module-resolver", {
+      "alias": {
+        "~(.+)": "./src/"
+      }
     }]
   ]
 }
