@@ -10,6 +10,9 @@ describe('store', () => {
     let vrac;
     let store;
 
+    /**
+     * Example model class to test BaseModel
+     */
     class Comment extends BaseModel {
         /**
          * Get the upper case name
@@ -20,8 +23,13 @@ describe('store', () => {
             return this.name.toUpperCase();
         }
 
+        /**
+         * Get the ID and name
+         *
+         * @returns {String}
+         */
         get idName() {
-            return `${this.id}/${this.name}`;
+            return `${ this.id }/${ this.name }`;
         }
     }
 
