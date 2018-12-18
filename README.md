@@ -1,5 +1,6 @@
 # Vuex Rest API Cache
 
+[![npm version](https://badge.fury.io/js/%40netsells%2Fvuex-rest-api-cache.svg)](https://badge.fury.io/js/%40netsells%2Fvuex-rest-api-cache)
 [![Build Status](https://travis-ci.org/netsells/vuex-rest-api-cache.svg?branch=master)](https://travis-ci.org/netsells/vuex-rest-api-cache)
 [![codecov](https://codecov.io/gh/netsells/vuex-rest-api-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/netsells/vuex-rest-api-cache)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/netsells/vuex-rest-api-cache/master)](https://stryker-mutator.github.io)
