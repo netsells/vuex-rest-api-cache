@@ -15,7 +15,8 @@
     "lint:js": "eslint src --max-warnings 0",
     "lint:spec": "eslint spec --max-warnings 0 --config .spec.eslintrc",
     "lint": "yarn lint:js && yarn lint:spec",
-    "build": "babel src -d dist"
+    "build": "babel src -d dist",
+    "prepublishOnly": "yarn build"
   },
   "author": "Sam Boylett <sam.boylett@netsells.co.uk>",
   "license": "ISC",
