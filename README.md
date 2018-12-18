@@ -7,7 +7,8 @@
 
 ### Vuex Rest API action creator and model cacher
 
-This module makes it easier to create Vuex store actions for communicating with
+This module makes it easier to create Vuex store actions, mutators, getters and
+state for communicating with rest APIs.
 
 ## Installation
 
