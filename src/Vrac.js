@@ -265,13 +265,14 @@ class Vrac {
                 fields = {},
                 params = {},
                 method = call.method,
+                readCache = call.readCache,
             } = {}) {
                 if (call.identified) {
                     if (!fields[self.identifier]) {
                         throw new Error(`The '${ call.name }' action requires a 'fields.${ self.identifier }' option`);
                     }
 
-                    if (call.readCache) {
+                    if (readCache) {
                         const model = context.getters.read(fields[self.identifier]);
 
                         if (model) {return model;}
@@ -281,7 +282,7 @@ class Vrac {
                         throw new Error(`The '${ call.name }' action can not be used with the 'fields.${ self.identifier }' option`);
                     }
 
-                    if (call.readCache) {
+                    if (readCache) {
                         return context.getters.index;
                     }
                 }
