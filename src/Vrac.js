@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 import {
-    parseSingle,
-    parseMultiple,
-    cacheMultiple,
-    cacheSingle,
-    cacheDestroy,
+    parseSingle as parseSingleDefault,
+    parseMultiple as parseMultipleDefault,
+    cacheMultiple as cacheMultipleDefault,
+    cacheSingle as cacheSingleDefault,
+    cacheDestroy as cacheDestroyDefault,
     BaseModel,
 } from '~/index';
 
@@ -47,12 +47,23 @@ class Vrac {
         identifier = 'id',
         children = {},
         Model = BaseModel,
+        parseSingle = parseSingleDefault,
+        parseMultiple = parseMultipleDefault,
+        cacheMultiple = cacheMultipleDefault,
+        cacheSingle = cacheSingleDefault,
+        cacheDestroy = cacheDestroyDefault,
     } = {}) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
         this.calls = [];
         this.children = {};
         this.Model = Model;
+
+        this.parseSingle = parseSingle;
+        this.parseMultiple = parseMultiple;
+        this.cacheMultiple = cacheMultiple;
+        this.cacheSingle = cacheSingle;
+        this.cacheDestroy = cacheDestroy;
 
         Object.keys(children).forEach(c => this.child(c, children[c]));
 
@@ -155,8 +166,8 @@ class Vrac {
      */
     createCall(name, {
         method = '',
-        parser = parseMultiple,
-        cacher = cacheMultiple,
+        parser = this.parseMultiple,
+        cacher = this.cacheMultiple,
         identified = false,
         readCache = false,
     } = {}) {

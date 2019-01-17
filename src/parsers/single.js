@@ -5,6 +5,6 @@
  * @param {Object} fields - Fields used to read/create/update the model
  * @returns {Object} model
  */
-export default function(data, fields) {
+export default function({ data }, fields) {
     return data || fields;
 }
