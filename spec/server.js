@@ -3,6 +3,12 @@ import express from 'express';
 const app = express();
 const port = process.env.PORT || 3000;
 
+/**
+ * Format data for a response
+ *
+ * @param {Object} data
+ * @returns {String} body
+ */
 const createJsonResponse = data => JSON.stringify({
     data,
 });
