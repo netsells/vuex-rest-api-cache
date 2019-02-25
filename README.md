@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/netsells/vuex-rest-api-cache.svg?branch=master)](https://travis-ci.org/netsells/vuex-rest-api-cache)
 [![codecov](https://codecov.io/gh/netsells/vuex-rest-api-cache/branch/master/graph/badge.svg)](https://codecov.io/gh/netsells/vuex-rest-api-cache)
 [![Mutation testing badge](https://badge.stryker-mutator.io/github.com/netsells/vuex-rest-api-cache/master)](https://stryker-mutator.github.io)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/e3db3c4a-3f5d-4126-8c25-33f8aec4db80/deploy-status)](https://app.netlify.com/sites/vuex-rest-api-cache/deploys)
 
 ### Vuex Rest API action creator and model cacher
 
@@ -38,7 +39,11 @@ const store = new Vuex.Store({
 });
 ```
 
-## Usage
+## Documentation
+
+[Documentation is available here](https://vuex-rest-api-cache.netlify.com)
+
+## Quick Usage
 
 This includes usage examples for root models (e.g. `/api/v1/posts`) and for child models (e.g. `/api/v1/posts/:post_id/comments`)
 
