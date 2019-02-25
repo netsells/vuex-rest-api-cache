@@ -6,6 +6,7 @@ jobs:
       script:
         - yarn run lint:js
         - yarn run lint:spec
+        - yarn run jsdoc
     - stage: test
       script:
         - yarn run test
