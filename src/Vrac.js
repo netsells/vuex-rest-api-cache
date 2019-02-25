@@ -185,7 +185,7 @@ class Vrac {
      * Instantiate a model class using the helpers if they exist
      *
      * @param {Object} fields
-     * @returns {this.Model} model
+     * @returns {Object} model
      */
     createModel(fields) {
         return new this.Model(fields);

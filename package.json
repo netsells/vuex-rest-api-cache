@@ -15,6 +15,7 @@
     "lint:js": "eslint src --max-warnings 0",
     "lint:spec": "eslint spec --max-warnings 0 --config .spec.eslintrc",
     "lint": "yarn lint:js && yarn lint:spec",
+    "docs": "jsdoc src",
     "build": "babel src -d dist",
     "prepublishOnly": "yarn build"
   },
@@ -31,6 +32,7 @@
     "eslint-plugin-jest": "^22.1.2",
     "express": "^4.16.4",
     "jest": "^23.6.0",
+    "jsdoc": "^3.5.5",
     "regenerator-runtime": "^0.13.1",
     "start-server-and-test": "^1.7.11",
     "stryker": "^0.33.1",

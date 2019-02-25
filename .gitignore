@@ -3,3 +3,4 @@ coverage
 .stryker-tmp
 reports
 dist
+out
