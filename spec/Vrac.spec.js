@@ -94,6 +94,10 @@ describe('Vrac', () => {
 
             expect(names).toContain('index');
         });
+
+        it('sets the method to get', () => {
+            expect(instance.calls[0].method).toBe('get');
+        });
     });
 
     describe('only read no array', () => {

@@ -165,7 +165,7 @@ class Vrac {
      * @param {Boolean} options.readCache - Whether this action should return from the cache if the model exists there
      */
     createCall(name, {
-        method = '',
+        method = 'get',
         parser = this.parseMultiple,
         cacher = this.cacheMultiple,
         identified = false,
