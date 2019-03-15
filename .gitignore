@@ -4,3 +4,4 @@ coverage
 reports
 dist
 out
+package-lock.json
