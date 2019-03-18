@@ -106,6 +106,25 @@ describe('Vrac', () => {
         });
     });
 
+    describe('custom calls', () => {
+        beforeEach(() => {
+            instance = new Vrac({
+                customCalls: {
+                    foo: { method: 'patch' },
+                },
+            });
+        });
+
+        it('creates the custom call', () => {
+            const call = instance.calls.find(({ name }) => name === 'foo');
+
+            expect(call).toEqual(expect.objectContaining({
+                name: 'foo',
+                method: 'patch',
+            }));
+        });
+    });
+
     describe('only index', () => {
         beforeEach(() => {
             instance = new Vrac({

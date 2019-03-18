@@ -68,6 +68,7 @@ class Vrac {
         cacheMultiple = cacheMultipleDefault,
         cacheSingle = cacheSingleDefault,
         cacheDestroy = cacheDestroyDefault,
+        customCalls = {},
     } = {}) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
@@ -125,6 +126,10 @@ class Vrac {
                 identified: true,
             });
         }
+
+        Object.keys(customCalls).forEach(name => {
+            this.createCall(name, customCalls[name]);
+        });
     }
 
     /**
