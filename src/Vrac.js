@@ -31,6 +31,22 @@ class Vrac {
     }
 
     /**
+     * Sugar for creating lots of modules
+     *
+     * @param {Object} modules - Object of module configs
+     * @returns {Object} - Namespaced Vuex modules
+     */
+    static createModules(modules) {
+        const generated = {};
+
+        Object.keys(modules).forEach(name => {
+            generated[name] = new Vrac(modules[name]).store;
+        });
+
+        return generated;
+    }
+
+    /**
      * Instantiate the class
      *
      * @param {Object} options

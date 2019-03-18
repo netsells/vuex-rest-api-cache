@@ -9,6 +9,32 @@ describe('Vrac', () => {
         expect(Vrac.name).toBe('Vrac');
     });
 
+    describe('createModules', () => {
+        let modules;
+
+        beforeEach(() => {
+            modules = Vrac.createModules({
+                foo: {
+                    baseUrl: '/foo',
+                },
+                bar: {
+                    baseUrl: '/bar',
+                },
+            });
+        });
+
+        it('returns namespaced Vuex modules', () => {
+            expect(modules).toEqual(expect.objectContaining({
+                foo: expect.objectContaining({
+                    namespaced: true,
+                }),
+                bar: expect.objectContaining({
+                    namespaced: true,
+                }),
+            }));
+        });
+    });
+
     describe('requestAdapter', () => {
         beforeEach(() => {
             jest.spyOn(axios, 'request').mockImplementation(() => Promise.resolve({}));
