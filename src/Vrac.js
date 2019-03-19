@@ -58,7 +58,10 @@ class Vrac {
      */
     constructor({
         baseUrl = '/',
-        only = ['index', 'create', 'read', 'update', 'destroy'],
+        singleton = false,
+        only = singleton
+            ? ['read', 'update']
+            : ['index', 'create', 'read', 'update', 'destroy'],
         except = [],
         identifier = 'id',
         children = {},
@@ -104,8 +107,8 @@ class Vrac {
             this.createCall('read', {
                 parser: parseSingle,
                 cacher: cacheSingle,
-                identified: true,
-                readCache: true,
+                identified: !singleton,
+                readCache: !singleton,
             });
         }
 
@@ -114,7 +117,7 @@ class Vrac {
                 method: 'patch',
                 parser: parseSingle,
                 cacher: cacheSingle,
-                identified: true,
+                identified: !singleton,
             });
         }
 
@@ -123,7 +126,7 @@ class Vrac {
                 method: 'delete',
                 parser: parseSingle,
                 cacher: cacheDestroy,
-                identified: true,
+                identified: !singleton,
             });
         }
 

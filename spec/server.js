@@ -65,4 +65,12 @@ app.get('/posts/2/comments/2', (req, res) => res.send(createJsonResponse({
     name: 'Comment 2',
 })));
 
+app.patch('/singleton', (req, res) => res.send(createJsonResponse({
+    name: 'Updated singleton',
+})));
+
+app.get('/singleton', (req, res) => res.send(createJsonResponse({
+    name: 'single stuff',
+})));
+
 app.listen(port);
