@@ -139,9 +139,10 @@ class Vrac {
      * Get the URL using the baseUrl and the supplied fields
      *
      * @param {Object} fields
+     * @param {String} path
      * @returns {String} endpoint
      */
-    getUrl(fields = {}) {
+    getUrl(fields = {}, path = '') {
         let url = this.baseUrl;
         const reqFields = (url.match(/:([a-z,_]+)/gi) || []).map(s => s.slice(1));
 
@@ -161,7 +162,7 @@ class Vrac {
             url += fields[this.identifier];
         }
 
-        return url;
+        return `${ url }${ path }`;
     }
 
     /**
@@ -190,10 +191,11 @@ class Vrac {
      */
     createCall(name, {
         method = 'get',
-        parser = this.parseMultiple,
-        cacher = this.cacheMultiple,
         identified = false,
+        parser = identified ? this.parseSingle : this.parseMultiple,
+        cacher = identified ? this.cacheSingle : this.cacheMultiple,
         readCache = false,
+        path = '',
     } = {}) {
         this.calls.push({
             name,
@@ -202,6 +204,7 @@ class Vrac {
             cacher,
             identified,
             readCache,
+            path,
         });
     }
 
@@ -314,6 +317,7 @@ class Vrac {
                 params = {},
                 method = call.method,
                 readCache = call.readCache,
+                path = call.path,
             } = {}) {
                 if (call.identified) {
                     if (!fields[self.identifier]) {
@@ -349,7 +353,7 @@ class Vrac {
                     context.commit('loading', call.name);
 
                     response = await self.constructor.requestAdapter.call(this, {
-                        url: self.getUrl(fields),
+                        url: self.getUrl(fields, path),
                         method,
                         data,
                         params,

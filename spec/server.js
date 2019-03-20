@@ -52,6 +52,16 @@ app.delete('/2', (req, res) => {
     }));
 });
 
+app.post('/posts/2/bar', (req, res) => res.send(createJsonResponse({
+    ok: 'bar',
+})));
+
+app.get('/posts/foo', (req, res) => res.send(createJsonResponse([{
+    ok: 'foo',
+}, {
+    ok: 'foo2',
+}])));
+
 app.get('/posts/2/comments', (req, res) => res.send(createJsonResponse([{
     id: 1,
     name: 'Comment 1',

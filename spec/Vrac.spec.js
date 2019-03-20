@@ -111,6 +111,7 @@ describe('Vrac', () => {
             instance = new Vrac({
                 customCalls: {
                     foo: { method: 'patch' },
+                    bar: { method: 'post', path: '/bar' },
                 },
             });
         });
@@ -121,6 +122,16 @@ describe('Vrac', () => {
             expect(call).toEqual(expect.objectContaining({
                 name: 'foo',
                 method: 'patch',
+            }));
+        });
+
+        it('can create the custom call with a custom path', () => {
+            const call = instance.calls.find(({ name }) => name === 'bar');
+
+            expect(call).toEqual(expect.objectContaining({
+                name: 'bar',
+                method: 'post',
+                path: '/bar',
             }));
         });
     });

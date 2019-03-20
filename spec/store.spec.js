@@ -100,6 +100,10 @@ describe('store', () => {
                                 Model: Comment,
                             }),
                         },
+                        customCalls: {
+                            bar: { method: 'post', path: '/bar', identified: true },
+                            foo: { method: 'get', path: '/foo' },
+                        },
                     },
                 },
             });
@@ -110,6 +114,49 @@ describe('store', () => {
             expect(store.state).toEqual(expect.objectContaining({
                 index: [],
             }));
+        });
+
+        describe('customCalls', () => {
+            describe('when identified', () => {
+                describe('when called properly', () => {
+                    let models;
+                    let responseModels;
+
+                    beforeEach(async() => {
+                        responseModels = { ok: 'bar' };
+
+                        models = await store.dispatch('posts/bar', {
+                            fields: {
+                                id: 2,
+                            },
+                        });
+                    });
+
+                    it('returns the item', () => {
+                        expect(models).toEqual(responseModels);
+                    });
+                });
+            });
+
+            describe('when not identified', () => {
+                describe('when called properly', () => {
+                    let models;
+                    let responseModels;
+
+                    beforeEach(async() => {
+                        responseModels = [
+                            { ok: 'foo' },
+                            { ok: 'foo2' },
+                        ];
+
+                        models = await store.dispatch('posts/foo');
+                    });
+
+                    it('returns the items', () => {
+                        expect(models).toEqual(responseModels);
+                    });
+                });
+            });
         });
 
         describe('children', () => {
