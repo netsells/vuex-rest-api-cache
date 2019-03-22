@@ -366,7 +366,11 @@ class Vrac {
 
                 call.cacher(context, parsed);
 
-                return parsed;
+                if (Array.isArray(parsed)) {
+                    return parsed.map(m => self.createModel(m));
+                }
+
+                return self.createModel(parsed);
             };
         });
 

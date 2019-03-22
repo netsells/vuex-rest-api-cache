@@ -119,13 +119,13 @@ describe('store', () => {
         describe('customCalls', () => {
             describe('when identified', () => {
                 describe('when called properly', () => {
-                    let models;
+                    let model;
                     let responseModels;
 
                     beforeEach(async() => {
                         responseModels = { ok: 'bar' };
 
-                        models = await store.dispatch('posts/bar', {
+                        model = await store.dispatch('posts/bar', {
                             fields: {
                                 id: 2,
                             },
@@ -133,7 +133,11 @@ describe('store', () => {
                     });
 
                     it('returns the item', () => {
-                        expect(models).toEqual(responseModels);
+                        expect(model).toEqual(responseModels);
+                    });
+
+                    it('returns an instance of BaseModel', () => {
+                        expect(model).toBeInstanceOf(BaseModel);
                     });
                 });
             });
@@ -216,6 +220,12 @@ describe('store', () => {
                         expect(models).toEqual(responseModels);
                     });
 
+                    it('returns instances of BaseModel', () => {
+                        models.forEach((model) => {
+                            expect(model).toBeInstanceOf(BaseModel);
+                        });
+                    });
+
                     it('caches the items in the store', () => {
                         expect(store.state.posts.comments.index).toEqual(responseModels);
                     });
@@ -256,6 +266,10 @@ describe('store', () => {
 
                         it('returns the model', () => {
                             expect(model).toEqual(responseModels[1]);
+                        });
+
+                        it('returns an instance of BaseModel', () => {
+                            expect(model).toBeInstanceOf(BaseModel);
                         });
 
                         it('does not submit a new request', () => {
