@@ -290,7 +290,7 @@ class Vrac {
      */
     get getters() {
         return {
-            index: ({ index }) => index.map(m => this.createModel(m)),
+            index: ({ index }) => index,
 
             read: (state, getters) => identifier => getters.index.find(
                 m => m[this.identifier] === identifier
@@ -328,7 +328,7 @@ class Vrac {
                         const model = context.getters.read(fields[self.identifier]);
 
                         if (model) {
-                            return model;
+                            return self.createModel(model);
                         }
                     }
                 } else {
@@ -337,7 +337,7 @@ class Vrac {
                     }
 
                     if (readCache) {
-                        return context.getters.index;
+                        return context.getters.index.map(m => self.createModel(m));
                     }
                 }
 
