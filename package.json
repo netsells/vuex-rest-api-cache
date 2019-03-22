@@ -1,6 +1,6 @@
 {
   "name": "@netsells/vuex-rest-api-cache",
-  "version": "2.3.0",
+  "version": "2.3.1",
   "description": "Vuex Rest API action creator and cacher",
   "main": "dist/index.js",
   "scripts": {

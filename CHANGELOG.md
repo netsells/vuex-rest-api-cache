@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 2.3.1 (2019-03-22)
+
+Bug fixes:
+
+  - Fix models not always being returns as instance of their class
+
 ## 2.3.0 (2019-03-20)
 
 Features:
