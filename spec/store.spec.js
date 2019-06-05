@@ -13,7 +13,7 @@ describe('store', () => {
     /**
      * Example model class to test BaseModel
      */
-    class Comment extends BaseModel {
+    class CommentModel extends BaseModel {
         /**
          * Get the upper case name
          *
@@ -97,7 +97,7 @@ describe('store', () => {
                         children: {
                             comments: new Vrac({
                                 baseUrl: 'http://localhost:3000/posts/:post_id/comments',
-                                Model: Comment,
+                                Model: CommentModel,
                             }),
                         },
                         customCalls: {
@@ -268,8 +268,8 @@ describe('store', () => {
                             expect(model).toEqual(responseModels[1]);
                         });
 
-                        it('returns an instance of BaseModel', () => {
-                            expect(model).toBeInstanceOf(BaseModel);
+                        it('returns an instance of CommentModel', () => {
+                            expect(model).toBeInstanceOf(CommentModel);
                         });
 
                         it('does not submit a new request', () => {
