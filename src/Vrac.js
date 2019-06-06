@@ -337,7 +337,11 @@ class Vrac {
                     }
 
                     if (readCache) {
-                        return context.getters.index.map(m => self.createModel(m));
+                        const cachedModels = context.getters.index;
+
+                        if (cachedModels.length) {
+                            return cachedModels.map(m => self.createModel(m));
+                        }
                     }
                 }
 

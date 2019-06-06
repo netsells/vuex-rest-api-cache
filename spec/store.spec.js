@@ -311,18 +311,31 @@ describe('store', () => {
                     let responseModels;
 
                     beforeEach(async() => {
-                        responseModels = [{ id: 5, name: 'foo' }];
-                        store.state.index = responseModels;
+                        responseModels = [{ id: 1, name: 'Thing 1' }, { id: 2, name: 'Stuff 2' }];
 
                         models = await store.dispatch('cachableIndex');
                     });
 
-                    it('returns the cached items', () => {
+                    it('returns the fetched items items', () => {
                         expect(models).toEqual(responseModels);
                     });
 
-                    it('does not submit a new request', () => {
-                        expect(axios.request.mock.calls.length).toEqual(0);
+                    it('submits a new request', () => {
+                        expect(axios.request.mock.calls.length).toEqual(1);
+                    });
+
+                    describe('when called again', () => {
+                        beforeEach(async() => {
+                            models = await store.dispatch('cachableIndex');
+                        });
+
+                        it('returns the fetched items items', () => {
+                            expect(models).toEqual(responseModels);
+                        });
+
+                        it('does not submit a new request', () => {
+                            expect(axios.request.mock.calls.length).toEqual(1);
+                        });
                     });
                 });
             });
