@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 2.4.0 (2019-06-06)
+
+Tweaks:
+
+- None identified requests which read from the cache now will only read from the cache if there's something in it.
+
 ## 2.3.1 (2019-03-22)
 
 Bug fixes:
