@@ -39,7 +39,7 @@
     "stryker-api": "^0.22.0",
     "stryker-babel-transpiler": "^0.7.10",
     "stryker-html-reporter": "^0.16.9",
-    "stryker-javascript-mutator": "^0.12.1",
+    "stryker-javascript-mutator": "^0.14.1",
     "stryker-jest-runner": "^1.2.9",
     "vue": "^2.5.20",
     "vuex": "^3.0.1"
