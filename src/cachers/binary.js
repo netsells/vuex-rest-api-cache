@@ -1,4 +1,4 @@
-import single from './single';
+/* eslint-disable no-empty-function */
 
 /**
  * Add the models to the cache

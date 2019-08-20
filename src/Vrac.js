@@ -190,6 +190,13 @@ class Vrac {
                 : new Vrac(child);
     }
 
+    /**
+     * Get the default parser
+     *
+     * @param {Object} options
+     *
+     * @returns {Function}
+     */
     getParser({ identified, binary }) {
         if (binary) {
             return this.parseBinary;
@@ -198,6 +205,13 @@ class Vrac {
         return identified ? this.parseSingle : this.parseMultiple;
     }
 
+    /**
+     * Get the default cacher
+     *
+     * @param {Object} options
+     *
+     * @returns {Function}
+     */
     getCacher({ identified, binary }) {
         if (binary) {
             return this.cacheBinary;
