@@ -1,6 +1,8 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
 import axios from 'axios';
+import fs from 'fs';
+import path from 'path';
 
 import Vrac, { BaseModel } from '~/index';
 
@@ -169,7 +171,17 @@ describe('store', () => {
                     let responseModels;
 
                     beforeEach(async() => {
-                        responseModels = 'raw data';
+                        responseModels = await new Promise((resolve, reject) => {
+                            const fileName = path.join(__dirname, 'netsells.ico');
+
+                            fs.readFile(fileName, (err, data) => {
+                                if (err) {
+                                    return reject(err);
+                                }
+
+                                resolve(data.toString());
+                            });
+                        });
 
                         models = await store.dispatch('posts/export');
                     });
