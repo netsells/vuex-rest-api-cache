@@ -237,7 +237,7 @@ class Vrac {
         readCache = false,
         path = '',
         binary = false,
-        responseType = binary ? 'arraybuffer' : 'json',
+        responseType = binary ? 'arraybuffer' : undefined,
         parser = this.getParser({ identified, binary }),
         cacher = this.getCacher({ identified, binary }),
     } = {}) {

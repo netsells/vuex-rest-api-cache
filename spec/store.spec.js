@@ -190,6 +190,10 @@ describe('store', () => {
                         expect(models.length).toEqual(responseModels.length);
                         expect(models.toString()).toEqual(responseModels.toString());
                     });
+
+                    it('is not cached', () => {
+                        expect(store.getters['posts/index']).toEqual([]);
+                    });
                 });
             });
         });
