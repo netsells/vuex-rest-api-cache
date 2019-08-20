@@ -237,7 +237,7 @@ class Vrac {
         readCache = false,
         path = '',
         binary = false,
-        responseType = binary ? 'blob' : 'json',
+        responseType = binary ? 'arraybuffer' : 'json',
         parser = this.getParser({ identified, binary }),
         cacher = this.getCacher({ identified, binary }),
     } = {}) {
@@ -250,17 +250,19 @@ class Vrac {
             readCache,
             path,
             responseType,
+            binary,
         });
     }
 
     /**
      * Instantiate a model class using the helpers if they exist
      *
-     * @param {Object|String} fieldsOrData
-     * @returns {Object|String} model
+     * @param {Object} fieldsOrData
+     * @param {Object} options
+     * @returns {Object} model
      */
-    createModel(fieldsOrData) {
-        if (typeof fieldsOrData === 'string') {
+    createModel(fieldsOrData, { binary }) {
+        if (binary) {
             return fieldsOrData;
         }
 
@@ -362,13 +364,13 @@ class Vrac {
 
         this.calls.forEach(call => {
             actions[call.name] = async function(context, {
-                fields = {},
-                params = {},
-                method = call.method,
-                readCache = call.readCache,
-                path = call.path,
-                responseType = call.responseType,
-            } = {}) {
+                    fields = {},
+                    params = {},
+                    method = call.method,
+                    readCache = call.readCache,
+                    path = call.path,
+                    responseType = call.responseType,
+                } = {}) {
                 if (call.identified) {
                     if (!fields[self.identifier]) {
                         throw new Error(`The '${ call.name }' action requires a 'fields.${ self.identifier }' option`);
@@ -378,7 +380,7 @@ class Vrac {
                         const model = context.getters.read(fields[self.identifier]);
 
                         if (model) {
-                            return self.createModel(model);
+                            return self.createModel(model, call);
                         }
                     }
                 } else {
@@ -390,7 +392,7 @@ class Vrac {
                         const cachedModels = context.getters.index;
 
                         if (cachedModels.length) {
-                            return cachedModels.map(m => self.createModel(m));
+                            return cachedModels.map(m => self.createModel(m, call));
                         }
                     }
                 }
@@ -422,10 +424,10 @@ class Vrac {
                 call.cacher(context, parsed);
 
                 if (Array.isArray(parsed)) {
-                    return parsed.map(m => self.createModel(m));
+                    return parsed.map(m => self.createModel(m, call));
                 }
 
-                return self.createModel(parsed);
+                return self.createModel(parsed, call);
             };
         });
 

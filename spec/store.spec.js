@@ -179,15 +179,16 @@ describe('store', () => {
                                     return reject(err);
                                 }
 
-                                resolve(data.toString());
+                                resolve(data);
                             });
                         });
 
                         models = await store.dispatch('posts/export');
                     });
 
-                    it('returns the raw blob', () => {
-                        expect(models).toEqual(responseModels);
+                    it('returns the raw binary blob', () => {
+                        expect(models.length).toEqual(responseModels.length);
+                        expect(models.toString()).toEqual(responseModels.toString());
                     });
                 });
             });
