@@ -103,6 +103,7 @@ describe('store', () => {
                         customCalls: {
                             bar: { method: 'post', path: '/bar', identified: true },
                             foo: { method: 'get', path: '/foo' },
+                            export: { method: 'get', path: '/export', binary: true },
                         },
                     },
                 },
@@ -157,6 +158,23 @@ describe('store', () => {
                     });
 
                     it('returns the items', () => {
+                        expect(models).toEqual(responseModels);
+                    });
+                });
+            });
+
+            describe('when binary type', () => {
+                describe('when called properly', () => {
+                    let models;
+                    let responseModels;
+
+                    beforeEach(async() => {
+                        responseModels = 'raw data';
+
+                        models = await store.dispatch('posts/export');
+                    });
+
+                    it('returns the raw blob', () => {
                         expect(models).toEqual(responseModels);
                     });
                 });

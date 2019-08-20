@@ -75,6 +75,8 @@ app.get('/posts/2/comments/2', (req, res) => res.send(createJsonResponse({
     name: 'Comment 2',
 })));
 
+app.get('/posts/export', (req, res) => res.send('raw data'));
+
 app.patch('/singleton', (req, res) => res.send(createJsonResponse({
     name: 'Updated singleton',
 })));

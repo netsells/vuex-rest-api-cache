@@ -3,9 +3,13 @@ import axios from 'axios';
 import {
     parseSingle as parseSingleDefault,
     parseMultiple as parseMultipleDefault,
+    parseBinary as parseBinaryDefault,
+
     cacheMultiple as cacheMultipleDefault,
     cacheSingle as cacheSingleDefault,
     cacheDestroy as cacheDestroyDefault,
+    cacheBinary as cacheBinaryDefault,
+
     BaseModel,
 } from '~/index';
 
@@ -66,11 +70,16 @@ class Vrac {
         identifier = 'id',
         children = {},
         Model = BaseModel,
+
         parseSingle = parseSingleDefault,
         parseMultiple = parseMultipleDefault,
+        parseBinary = parseBinaryDefault,
+
         cacheMultiple = cacheMultipleDefault,
         cacheSingle = cacheSingleDefault,
         cacheDestroy = cacheDestroyDefault,
+        cacheBinary = cacheBinaryDefault,
+
         customCalls = {},
     } = {}) {
         this.baseUrl = baseUrl;
@@ -81,9 +90,12 @@ class Vrac {
 
         this.parseSingle = parseSingle;
         this.parseMultiple = parseMultiple;
+        this.parseBinary = parseBinary;
+
         this.cacheMultiple = cacheMultiple;
         this.cacheSingle = cacheSingle;
         this.cacheDestroy = cacheDestroy;
+        this.cacheBinary = cacheBinary;
 
         Object.keys(children).forEach(c => this.child(c, children[c]));
 
@@ -178,6 +190,22 @@ class Vrac {
                 : new Vrac(child);
     }
 
+    getParser({ identified, binary }) {
+        if (binary) {
+            return this.parseBinary;
+        }
+
+        return identified ? this.parseSingle : this.parseMultiple;
+    }
+
+    getCacher({ identified, binary }) {
+        if (binary) {
+            return this.cacheBinary;
+        }
+
+        return identified ? this.cacheSingle : this.cacheMultiple;
+    }
+
     /**
      * Create an action for an endpoint
      *
@@ -192,10 +220,12 @@ class Vrac {
     createCall(name, {
         method = 'get',
         identified = false,
-        parser = identified ? this.parseSingle : this.parseMultiple,
-        cacher = identified ? this.cacheSingle : this.cacheMultiple,
         readCache = false,
         path = '',
+        binary = false,
+        responseType = binary ? 'blob' : 'json',
+        parser = this.getParser({ identified, binary }),
+        cacher = this.getCacher({ identified, binary }),
     } = {}) {
         this.calls.push({
             name,
@@ -205,17 +235,22 @@ class Vrac {
             identified,
             readCache,
             path,
+            responseType,
         });
     }
 
     /**
      * Instantiate a model class using the helpers if they exist
      *
-     * @param {Object} fields
-     * @returns {Object} model
+     * @param {Object|String} fieldsOrData
+     * @returns {Object|String} model
      */
-    createModel(fields) {
-        return new this.Model(fields);
+    createModel(fieldsOrData) {
+        if (typeof fieldsOrData === 'string') {
+            return fieldsOrData;
+        }
+
+        return new this.Model(fieldsOrData);
     }
 
     /**
@@ -318,6 +353,7 @@ class Vrac {
                 method = call.method,
                 readCache = call.readCache,
                 path = call.path,
+                responseType = call.responseType,
             } = {}) {
                 if (call.identified) {
                     if (!fields[self.identifier]) {
@@ -361,6 +397,7 @@ class Vrac {
                         method,
                         data,
                         params,
+                        responseType,
                     }, context);
                 } finally {
                     context.commit('loaded', call.name);
