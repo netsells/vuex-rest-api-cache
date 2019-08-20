@@ -1,5 +1,11 @@
 # CHANGELOG.md
 
+## 2.5.0 (2019-06-06)
+
+Features:
+
+- Added support for binary file downloads
+
 ## 2.4.0 (2019-06-06)
 
 Tweaks:
