@@ -23,20 +23,18 @@ yarn add @netsells/vuex-rest-api-cache
 import Vuex from 'vuex';
 import Vrac from 'vuex-rest-api-cache';
 
-const posts = new Vrac({
-    baseUrl: `${ API_URL }/posts`,
-    children: {
-        comments: {
-            baseUrl: `${ API_URL }/posts/:post_id/comments`
+const modules = Vrac.createModules({
+    posts: {
+        baseUrl: `${ API_URL }/posts`,
+        children: {
+            comments: {
+                baseUrl: `${ API_URL }/posts/:post_id/comments`
+            },
         },
     },
-}).store;
-
-const store = new Vuex.Store({
-    modules: {
-        posts,
-    },
 });
+
+const store = new Vuex.Store({ modules });
 ```
 
 ## Documentation
