@@ -59,6 +59,18 @@ class Vrac {
      * @param {Array<String>|String} options.except - Which actions not to create for this model
      * @param {String} options.identifier - The identifier field, e.g. `id`
      * @param {Object} options.children - Children for this module
+     * @param {Object} options.singleton - Whether this is a singleton endpoint or not - i.e. only `read` and `update` calls
+     * @param {Object} options.Model - Model class to use for the returned items
+     * @param {Object} options.customCalls - Custom and extra API calls to add to this model
+     *
+     * @param {Object} options.parseSingle - Function to parse a single item returned from the API
+     * @param {Object} options.parseMultiple - Function to parse a multiple items returned from the API
+     * @param {Object} options.parseBinary - Function to parse a binary item returned from the API
+     *
+     * @param {Object} options.cacheSingle - Function to cache a single item returned from the API
+     * @param {Object} options.cacheMultiple - Function to cache multiple items returned from the API
+     * @param {Object} options.cacheDestroy - Function to remove an item from the cache after a `destroy` call
+     * @param {Object} options.cacheBinary - Function to cache cache a binary item returned from the API
      */
     constructor({
         baseUrl = '/',
@@ -70,6 +82,7 @@ class Vrac {
         identifier = 'id',
         children = {},
         Model = BaseModel,
+        customCalls = {},
 
         parseSingle = parseSingleDefault,
         parseMultiple = parseMultipleDefault,
@@ -79,8 +92,6 @@ class Vrac {
         cacheSingle = cacheSingleDefault,
         cacheDestroy = cacheDestroyDefault,
         cacheBinary = cacheBinaryDefault,
-
-        customCalls = {},
     } = {}) {
         this.baseUrl = baseUrl;
         this.identifier = identifier;
@@ -194,6 +205,8 @@ class Vrac {
      * Get the default parser
      *
      * @param {Object} options
+     * @param {Boolean} options.identified - Whether this is a parser for an identified API call or not
+     * @param {Boolean} options.binary - Whether this is a parser for a binary API call or not
      *
      * @returns {Function}
      */
@@ -209,6 +222,8 @@ class Vrac {
      * Get the default cacher
      *
      * @param {Object} options
+     * @param {Boolean} options.identified - Whether this is a cacher for an identified API call or not
+     * @param {Boolean} options.binary - Whether this is a cacher for a binary API call or not
      *
      * @returns {Function}
      */
@@ -230,6 +245,9 @@ class Vrac {
      * @param {Function} options.cacher - Function used to cache the model from the response
      * @param {Boolean} options.identified - Whether this endpoint needs an identifier field or not, e.g. `id`
      * @param {Boolean} options.readCache - Whether this action should return from the cache if the model exists there
+     * @param {Boolean} options.path - Path for this callback, appended to baseUrl
+     * @param {Boolean} options.binary - Whether this is a binary model or not
+     * @param {Boolean} options.responseType - Override responseType, by default this is `undefined` for normal models, and `arraybuffer` for binary models
      */
     createCall(name, {
         method = 'get',
@@ -259,6 +277,8 @@ class Vrac {
      *
      * @param {Object} fieldsOrData
      * @param {Object} options
+     * @param {Boolean} options.binary - Whether this is a binary model or not
+     *
      * @returns {Object} model
      */
     createModel(fieldsOrData, { binary }) {
