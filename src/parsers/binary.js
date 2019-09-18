@@ -5,5 +5,8 @@
  * @returns {Object}
  */
 export default function(data) {
-    return data;
+    return {
+        model: data,
+        meta: {},
+    };
 }

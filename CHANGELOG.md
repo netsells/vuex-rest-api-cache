@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.6.0 (2019-09-18)
+
+- Added meta support for multiple model endpoints
+
 ## 2.5.0 (2019-08-20)
 
 Features:

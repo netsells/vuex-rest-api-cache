@@ -4,6 +4,9 @@
  * @param {Object} data - Data from the API
  * @returns {Array<Object>} models
  */
-export default function({ data }) {
-    return data;
+export default function({ data, meta }) {
+    return {
+        models: data,
+        meta,
+    };
 }

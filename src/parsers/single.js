@@ -6,5 +6,8 @@
  * @returns {Object} model
  */
 export default function({ data }, fields) {
-    return data || fields;
+    return {
+        model: data || fields,
+        meta: {},
+    };
 }

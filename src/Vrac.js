@@ -441,13 +441,17 @@ class Vrac {
 
                 const parsed = call.parser(response.data, fields);
 
-                call.cacher(context, parsed);
+                call.cacher(context, parsed.models || parsed.model);
 
-                if (Array.isArray(parsed)) {
-                    return parsed.map(m => self.createModel(m, call));
+                if (parsed.models) {
+                    const value = parsed.models.map(m => self.createModel(m, call));
+
+                    value.meta = parsed.meta;
+
+                    return value;
                 }
 
-                return self.createModel(parsed, call);
+                return self.createModel(parsed.model, call);
             };
         });
 
