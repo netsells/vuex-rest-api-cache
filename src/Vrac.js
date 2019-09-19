@@ -11,7 +11,7 @@ import {
     cacheBinary as cacheBinaryDefault,
 
     BaseModel,
-} from '~/index';
+} from './index';
 
 /**
  * Vuex Rest API Cacher class

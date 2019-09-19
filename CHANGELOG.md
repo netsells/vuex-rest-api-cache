@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.7.1 (2019-09-19)
+
+- Fix build issue
+
 ## 2.7.0 (2019-09-19)
 
 - Added toJSON to BaseModel to prevent nuxt errors

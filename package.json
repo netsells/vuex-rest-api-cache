@@ -1,6 +1,6 @@
 {
   "name": "@netsells/vuex-rest-api-cache",
-  "version": "2.7.0",
+  "version": "2.7.1",
   "description": "Vuex Rest API action creator and cacher",
   "main": "dist/index.js",
   "scripts": {
@@ -34,7 +34,6 @@
     "@stryker-mutator/javascript-mutator": "^2.1.0",
     "@stryker-mutator/jest-runner": "^2.1.0",
     "babel-jest": "^24.9.0",
-    "babel-plugin-module-resolver": "^3.2.0",
     "codecov": "^3.1.0",
     "eslint-plugin-jest": "^22.1.2",
     "express": "^4.16.4",
