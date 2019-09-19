@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.7.0 (2019-09-19)
+
+- Added toJSON to BaseModel to prevent nuxt errors
+
 ## 2.6.0 (2019-09-18)
 
 - Added meta support for multiple model endpoints
