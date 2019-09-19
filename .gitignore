@@ -5,3 +5,4 @@ reports
 dist
 out
 package-lock.json
+yarn-error.log
