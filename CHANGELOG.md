@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## Unreleased
+
+- Allow falsy but valid values, e.g. `0`, to be used as a URL parameter
+
 ## 2.7.1 (2019-09-19)
 
 - Fix build issue

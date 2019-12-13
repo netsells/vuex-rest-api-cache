@@ -276,6 +276,12 @@ describe('Vrac', () => {
                 });
             });
 
+            describe('when passed a falsy but present ID', () => {
+                it('returns the URL with the field applied', () => {
+                    expect(instance.getUrl({ post_id: 0 })).toBe('/post/0/comment');
+                });
+            });
+
             describe('when passed the needed field and an id', () => {
                 it('returns the URL with the field applied and id appended', () => {
                     expect(instance.getUrl({ post_id: 45, id: 3 })).toBe('/post/45/comment/3');

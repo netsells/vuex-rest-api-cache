@@ -392,7 +392,7 @@ class Vrac {
                     responseType = call.responseType,
                 } = {}) {
                 if (call.identified) {
-                    if (!fields[self.identifier]) {
+                    if ([null, undefined].includes(fields[self.identifier])) {
                         throw new Error(`The '${ call.name }' action requires a 'fields.${ self.identifier }' option`);
                     }
 

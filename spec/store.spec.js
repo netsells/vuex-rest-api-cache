@@ -528,6 +528,12 @@ describe('store', () => {
                     });
                 });
 
+                describe('when called with a falsy id', () => {
+                    it('does not throw an error', async() => {
+                        await expect(store.dispatch('read', { fields: { id: 0 } })).resolves.toEqual(expect.any(Object));
+                    });
+                });
+
                 describe('when called properly', () => {
                     let model;
                     let responseModel;
