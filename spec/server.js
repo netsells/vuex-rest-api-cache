@@ -27,6 +27,11 @@ app.get('/2', (req, res) => res.send(createJsonResponse({
     name: 'Stuff 2',
 })));
 
+app.get('/0', (req, res) => res.send(createJsonResponse({
+    id: 0,
+    name: 'Stuff 0',
+})));
+
 app.patch('/2', (req, res) => res.send(createJsonResponse({
     id: 2,
     name: 'Updated stuff',

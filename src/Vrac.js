@@ -177,7 +177,7 @@ class Vrac {
             url = url.replace(`:${ field }`, fields[field]);
         });
 
-        if (fields[this.identifier]) {
+        if (![null, undefined].includes(fields[this.identifier])) {
             if (url.slice(-1)[0] !== '/') {
                 url += '/';
             }

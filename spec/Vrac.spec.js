@@ -232,6 +232,12 @@ describe('Vrac', () => {
                     expect(instance.getUrl({ id: 'foo' })).toBe('/foo');
                 });
             });
+
+            describe('when passed falsy id', () => {
+                it('returns the URL with the ID appended', () => {
+                    expect(instance.getUrl({ id: 0 })).toBe('/0');
+                });
+            });
         });
 
         describe('actions', () => {

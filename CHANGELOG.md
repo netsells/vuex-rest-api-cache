@@ -1,5 +1,9 @@
 # CHANGELOG.md
 
+## 2.7.3 (2019-12-13)
+
+- Fix falsy IDs not being set correctly on read requests
+
 ## 2.7.2 (2019-12-13)
 
 - Allow falsy but valid values, e.g. `0`, to be used as a URL parameter
