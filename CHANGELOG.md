@@ -1,6 +1,6 @@
 # CHANGELOG.md
 
-## Unreleased
+## 2.7.2 (2019-12-13)
 
 - Allow falsy but valid values, e.g. `0`, to be used as a URL parameter
 
