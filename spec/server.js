@@ -47,6 +47,11 @@ app.post('/', (req, res) => res.send(createJsonResponse({
     name: 'New stuff',
 })));
 
+app.get('/3', (req, res) => res.send(createJsonResponse({
+    id: 3,
+    name: 'New stuff',
+})));
+
 app.delete('/2', (req, res) => {
     if (req.query.noModel) {
         return res.send();
