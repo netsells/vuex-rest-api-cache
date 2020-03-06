@@ -153,17 +153,41 @@ class Vrac extends Vra {
      */
     get actions() {
         const actions = super.actions;
+        const self = this;
 
         Object.keys(actions).forEach(name => {
             const call = this.getCall(name);
             const cacher = call.cacher || this.getCacher(call);
             const action = actions[name];
 
-            actions[name] = async function(context, ...args) {
+            actions[name] = async function(context, options = {}) {
+                const {
+                    readCache = call.readCache,
+                    fields = {},
+                } = options;
+
+                if (call.identified) {
+                    if (readCache) {
+                        const model = context.getters.read(fields[self.identifier]);
+
+                        if (model) {
+                            return self.createModel(model, call);
+                        }
+                    }
+                } else {
+                    if (readCache) {
+                        const cachedModels = context.getters.index;
+
+                        if (cachedModels.length) {
+                            return cachedModels.map(m => self.createModel(m, call));
+                        }
+                    }
+                }
+
                 try {
                     context.commit('loading', name);
 
-                    const model = await action.call(this, context, ...args);
+                    const model = await action.call(this, context, options);
 
                     cacher(context, model);
 
