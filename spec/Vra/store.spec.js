@@ -104,12 +104,21 @@ describe('store', () => {
     });
 
     describe('multiple', () => {
+        let postsToModel;
+
         beforeEach(() => {
+            postsToModel = jest.fn();
+
             vra = new Vra({
                 baseUrl: 'http://localhost:3000',
                 children: {
                     posts: {
                         baseUrl: 'http://localhost:3000/posts',
+                        toModel: obj => {
+                            postsToModel(obj);
+
+                            return obj;
+                        },
                         children: {
                             comments: new Vra({
                                 baseUrl: 'http://localhost:3000/posts/:post_id/comments',
@@ -149,6 +158,10 @@ describe('store', () => {
 
                     it('returns a standard object', () => {
                         expect(model).not.toBeInstanceOf(BaseModel);
+                    });
+
+                    it('calls toModel', () => {
+                        expect(postsToModel).toHaveBeenCalledWith(model);
                     });
                 });
             });
@@ -197,6 +210,10 @@ describe('store', () => {
                     it('returns the raw binary blob', () => {
                         expect(models.length).toEqual(responseModels.length);
                         expect(models.toString()).toEqual(responseModels.toString());
+                    });
+
+                    it('does not call toModel', () => {
+                        expect(postsToModel).not.toHaveBeenCalled();
                     });
                 });
             });
