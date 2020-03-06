@@ -4,9 +4,18 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
-import Vrac, { BaseModel } from '~/index';
+import Vrac from '~/Vrac/index';
 
 Vue.use(Vuex);
+
+/**
+ * Example BaseModel.
+ */
+class BaseModel {
+    constructor(fields) {
+        Object.assign(this, fields);
+    }
+}
 
 describe('store', () => {
     let vrac;
@@ -99,7 +108,7 @@ describe('store', () => {
                         children: {
                             comments: new Vrac({
                                 baseUrl: 'http://localhost:3000/posts/:post_id/comments',
-                                Model: CommentModel,
+                                toModel: data => new CommentModel(data),
                             }),
                         },
                         customCalls: {
@@ -139,8 +148,8 @@ describe('store', () => {
                         expect(model).toEqual(responseModels);
                     });
 
-                    it('returns an instance of BaseModel', () => {
-                        expect(model).toBeInstanceOf(BaseModel);
+                    it('returns a normal object', () => {
+                        expect(model).not.toBeInstanceOf(BaseModel);
                     });
                 });
             });

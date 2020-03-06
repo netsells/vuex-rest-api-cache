@@ -167,9 +167,9 @@ class Vra {
      */
     child(name, child) {
         this.children[name]
-            = child instanceof Vra
+            = child instanceof this.constructor
                 ? child
-                : new Vra(child);
+                : new this.constructor(child);
     }
 
     /**
@@ -208,6 +208,7 @@ class Vra {
         binary = false,
         responseType = binary ? 'arraybuffer' : undefined,
         parser = this.getParser({ identified, binary }),
+        ...rest
     } = {}) {
         this.calls.push({
             name,
@@ -217,7 +218,34 @@ class Vra {
             path,
             responseType,
             binary,
+            ...rest,
         });
+    }
+
+    /**
+     * Get a calls options.
+     *
+     * @param {string} name - Name of the action.
+     * @returns {Object|null}
+     */
+    getCall(name) {
+        return this.calls.find(c => c.name === name);
+    }
+
+    /**
+     * Modify an action for an endpoint.
+     *
+     * @param {string} name - Name of the action.
+     * @param {object} options
+     */
+    modifyCall(name, options) {
+        const call = this.getCall(name);
+
+        if (!call) {
+            return;
+        }
+
+        Object.assign(call, options);
     }
 
     /**
