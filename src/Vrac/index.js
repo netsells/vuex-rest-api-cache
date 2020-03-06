@@ -46,12 +46,7 @@ class Vrac extends Vra {
         });
 
         this.modifyCall('read', {
-            cacher: cacheSingle,
             readCache: !singleton,
-        });
-
-        this.modifyCall('update', {
-            cacher: cacheSingle,
         });
 
         this.modifyCall('destroy', {
