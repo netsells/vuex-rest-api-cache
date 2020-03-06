@@ -181,7 +181,7 @@ describe('store', () => {
 
                     beforeEach(async () => {
                         responseModels = await new Promise((resolve, reject) => {
-                            const fileName = path.join(__dirname, 'netsells.ico');
+                            const fileName = path.join(__dirname, '../netsells.ico');
 
                             fs.readFile(fileName, (err, data) => {
                                 if (err) {
