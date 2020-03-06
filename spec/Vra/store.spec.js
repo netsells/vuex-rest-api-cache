@@ -10,6 +10,11 @@ import { Vra } from '~/index';
  * Example BaseModel.
  */
 class BaseModel {
+    /**
+     * Setup the model.
+     *
+     * @param {object} fields
+     */
     constructor(fields) {
         Object.assign(this, fields);
     }
@@ -596,10 +601,8 @@ describe('store', () => {
                 });
 
                 describe('when calling index first', () => {
-                    let otherModel;
-
                     beforeEach(async () => {
-                        [otherModel] = await store.dispatch('index');
+                        await store.dispatch('index');
                     });
 
                     describe('when calling destroy', () => {

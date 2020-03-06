@@ -12,6 +12,11 @@ Vue.use(Vuex);
  * Example BaseModel.
  */
 class BaseModel {
+    /**
+     * Setup the model.
+     *
+     * @param {object} fields
+     */
     constructor(fields) {
         Object.assign(this, fields);
     }

@@ -41,7 +41,6 @@ class Vrac extends Vra {
         this.cacheDestroy = cacheDestroy;
         this.cacheBinary = cacheBinary;
 
-
         this.modifyCall('create', {
             cacher: cacheSingle,
         });
@@ -174,13 +173,11 @@ class Vrac extends Vra {
                             return self.createModel(model, call);
                         }
                     }
-                } else {
-                    if (readCache) {
-                        const cachedModels = context.getters.index;
+                } else if (readCache) {
+                    const cachedModels = context.getters.index;
 
-                        if (cachedModels.length) {
-                            return cachedModels.map(m => self.createModel(m, call));
-                        }
+                    if (cachedModels.length) {
+                        return cachedModels.map(m => self.createModel(m, call));
                     }
                 }
 
@@ -195,7 +192,7 @@ class Vrac extends Vra {
                 } finally {
                     context.commit('loaded', name);
                 }
-            }
+            };
         });
 
         return actions;

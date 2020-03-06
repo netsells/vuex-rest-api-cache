@@ -10,7 +10,7 @@ import {
  * Vuex Rest API class.
  *
  * Generates Vuex stores based on the supplied config. The stores have actions
- * for fetching and returning the API data,
+ * for fetching and returning the API data,.
  */
 class Vra {
     /**
@@ -226,7 +226,7 @@ class Vra {
      * Get a calls options.
      *
      * @param {string} name - Name of the action.
-     * @returns {Object|null}
+     * @returns {object|null}
      */
     getCall(name) {
         return this.calls.find(c => c.name === name);
@@ -301,10 +301,8 @@ class Vra {
                     if ([null, undefined].includes(fields[self.identifier])) {
                         throw new Error(`The '${ call.name }' action requires a 'fields.${ self.identifier }' option`);
                     }
-                } else {
-                    if (fields[self.identifier]) {
-                        throw new Error(`The '${ call.name }' action can not be used with the 'fields.${ self.identifier }' option`);
-                    }
+                } else if (fields[self.identifier]) {
+                    throw new Error(`The '${ call.name }' action can not be used with the 'fields.${ self.identifier }' option`);
                 }
 
                 let data = undefined;
