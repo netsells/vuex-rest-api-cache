@@ -7,6 +7,24 @@ import {
 } from './parsers/index';
 
 /**
+ * Vra class initilisation options.
+ *
+ * @typedef {object} VraOptions
+ * @property {string} baseUrl - URL of the endpoint, without the models ID.
+ * @property {Array<string>|string} only - Which actions to create for this model.
+ * @property {Array<string>|string} except - Which actions not to create for this model.
+ * @property {string} identifier - The identifier field, e.g. `id`.
+ * @property {object} children - Children for this module.
+ * @property {boolean} singleton - Whether this is a singleton endpoint or not - i.e. Only `read` and `update` calls.
+ * @property {Function} toModel - Convert API data to a model.
+ * @property {object} customCalls - Custom and extra API calls to add to this model.
+ *
+ * @property {Function} parseSingle - Function to parse a single item returned from the API.
+ * @property {Function} parseMultiple - Function to parse a multiple items returned from the API.
+ * @property {Function} parseBinary - Function to parse a binary item returned from the API.
+ */
+
+/**
  * Vuex Rest API class.
  *
  * Generates Vuex stores based on the supplied config. The stores have actions
@@ -44,19 +62,7 @@ class Vra {
     /**
      * Instantiate the class.
      *
-     * @param {object} options
-     * @param {string} options.baseUrl - URL of the endpoint, without the models ID.
-     * @param {Array<string>|string} options.only - Which actions to create for this model.
-     * @param {Array<string>|string} options.except - Which actions not to create for this model.
-     * @param {string} options.identifier - The identifier field, e.g. `id`.
-     * @param {object} options.children - Children for this module.
-     * @param {boolean} options.singleton - Whether this is a singleton endpoint or not - i.e. Only `read` and `update` calls.
-     * @param {Function} options.toModel - Convert API data to a model.
-     * @param {object} options.customCalls - Custom and extra API calls to add to this model.
-     *
-     * @param {Function} options.parseSingle - Function to parse a single item returned from the API.
-     * @param {Function} options.parseMultiple - Function to parse a multiple items returned from the API.
-     * @param {Function} options.parseBinary - Function to parse a binary item returned from the API.
+     * @param {VraOptions} options
      */
     constructor({
         baseUrl = '/',

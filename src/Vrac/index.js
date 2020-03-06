@@ -1,3 +1,5 @@
+/* global VraOptions */
+
 import {
     cacheMultiple as cacheMultipleDefault,
     cacheSingle as cacheSingleDefault,
@@ -6,6 +8,23 @@ import {
 } from './cachers/index';
 
 import Vra from '../Vra/index';
+
+/**
+ * Vrac only class initilisation options.
+ *
+ * @typedef {object} VracOnlyOptions
+ * @property {Function} cacheSingle - Function to cache a single item returned from the API.
+ * @property {Function} cacheMultiple - Function to cache multiple items returned from the API.
+ * @property {Function} cacheDestroy - Function to remove an item from the cache after a `destroy` call.
+ * @property {Function} cacheBinary - Function to cache cache a binary item returned from the API.
+ * @property {boolean} singleton - Whether this is a singleton endpoint or not.
+ */
+
+/**
+ * Vrac and Vra combined class initilisation options.
+ *
+ * @typedef {VracOnlyOptions | VraOptions} VracOptions
+ */
 
 /**
  * Vuex Rest API Cacher class.
@@ -18,12 +37,7 @@ class Vrac extends Vra {
     /**
      * Instantiate the class.
      *
-     * @param {object} options
-     * @param {Function} options.cacheSingle - Function to cache a single item returned from the API.
-     * @param {Function} options.cacheMultiple - Function to cache multiple items returned from the API.
-     * @param {Function} options.cacheDestroy - Function to remove an item from the cache after a `destroy` call.
-     * @param {Function} options.cacheBinary - Function to cache cache a binary item returned from the API.
-     * @param {boolean} options.singleton - Whether this is a singleton endpoint or not.
+     * @param {VracOptions} options
      */
     constructor(options = {}) {
         super(options);
