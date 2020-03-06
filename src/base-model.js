@@ -1,13 +1,13 @@
 /**
- * Base class for model classes
+ * Base class for model classes.
  *
- * Can extend this and add helper functions for the models
+ * Can extend this and add helper functions for the models.
  */
 export default class BaseModel {
     /**
-     * Instantiate the model
+     * Instantiate the model.
      *
-     * @param {Object} fields
+     * @param {object} fields
      */
     constructor(fields) {
         Object.assign(this, fields);
@@ -15,9 +15,9 @@ export default class BaseModel {
 
     /**
      * Allows nuxt/devalue to transfer this model from SSR to client side
-     * without warnings
+     * without warnings.
      *
-     * @returns {Object}
+     * @returns {object}
      */
     toJSON() {
         const fields = Object.keys(this).reduce((obj, key) => ({

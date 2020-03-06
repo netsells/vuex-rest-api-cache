@@ -14,7 +14,7 @@ import {
 } from './index';
 
 /**
- * Vuex Rest API Cacher class
+ * Vuex Rest API Cacher class.
  *
  * Generates Vuex stores based on the supplied config. The stores have actions
  * for fetching API data, mutators for caching them and getters for accessing
@@ -22,23 +22,22 @@ import {
  */
 class Vrac {
     /**
-     * Allows you to change the request function to something else (e.g. to add
+     * Allows you to change the request function to something else (e.g. To add
      * authorization headers) or to use a different HTTP library entirely. The
      * function context (`this`) is set to the same of the Vuex action.
      *
-     * @param {Object} requestParams - Request params for `axios.request`
-     * @param {Object} context - Context of the Vuex action
-     * @returns {Promise<Object>} - The result of the request
+     * @param {object} requestParams - Request params for `axios.request`.
+     * @returns {Promise<object>} - The result of the request.
      */
     static requestAdapter(requestParams) {
         return axios.request(requestParams);
     }
 
     /**
-     * Sugar for creating lots of modules
+     * Sugar for creating lots of modules.
      *
-     * @param {Object} modules - Object of module configs
-     * @returns {Object} - Namespaced Vuex modules
+     * @param {object} modules - Object of module configs.
+     * @returns {object} - Namespaced Vuex modules.
      */
     static createModules(modules) {
         const generated = {};
@@ -51,26 +50,26 @@ class Vrac {
     }
 
     /**
-     * Instantiate the class
+     * Instantiate the class.
      *
-     * @param {Object} options
-     * @param {String} options.baseUrl - URL of the endpoint, without the models ID
-     * @param {Array<String>|String} options.only - Which actions to create for this model
-     * @param {Array<String>|String} options.except - Which actions not to create for this model
-     * @param {String} options.identifier - The identifier field, e.g. `id`
-     * @param {Object} options.children - Children for this module
-     * @param {Boolean} options.singleton - Whether this is a singleton endpoint or not - i.e. only `read` and `update` calls
-     * @param {Class} options.Model - Model class to use for the returned items
-     * @param {Object} options.customCalls - Custom and extra API calls to add to this model
+     * @param {object} options
+     * @param {string} options.baseUrl - URL of the endpoint, without the models ID.
+     * @param {Array<string>|string} options.only - Which actions to create for this model.
+     * @param {Array<string>|string} options.except - Which actions not to create for this model.
+     * @param {string} options.identifier - The identifier field, e.g. `id`.
+     * @param {object} options.children - Children for this module.
+     * @param {boolean} options.singleton - Whether this is a singleton endpoint or not - i.e. Only `read` and `update` calls.
+     * @param {Function} options.Model - Model class to use for the returned items.
+     * @param {object} options.customCalls - Custom and extra API calls to add to this model.
      *
-     * @param {Function} options.parseSingle - Function to parse a single item returned from the API
-     * @param {Function} options.parseMultiple - Function to parse a multiple items returned from the API
-     * @param {Function} options.parseBinary - Function to parse a binary item returned from the API
+     * @param {Function} options.parseSingle - Function to parse a single item returned from the API.
+     * @param {Function} options.parseMultiple - Function to parse a multiple items returned from the API.
+     * @param {Function} options.parseBinary - Function to parse a binary item returned from the API.
      *
-     * @param {Function} options.cacheSingle - Function to cache a single item returned from the API
-     * @param {Function} options.cacheMultiple - Function to cache multiple items returned from the API
-     * @param {Function} options.cacheDestroy - Function to remove an item from the cache after a `destroy` call
-     * @param {Function} options.cacheBinary - Function to cache cache a binary item returned from the API
+     * @param {Function} options.cacheSingle - Function to cache a single item returned from the API.
+     * @param {Function} options.cacheMultiple - Function to cache multiple items returned from the API.
+     * @param {Function} options.cacheDestroy - Function to remove an item from the cache after a `destroy` call.
+     * @param {Function} options.cacheBinary - Function to cache cache a binary item returned from the API.
      */
     constructor({
         baseUrl = '/',
@@ -159,11 +158,11 @@ class Vrac {
     }
 
     /**
-     * Get the URL using the baseUrl and the supplied fields
+     * Get the URL using the baseUrl and the supplied fields.
      *
-     * @param {Object} fields
-     * @param {String} path
-     * @returns {String} endpoint
+     * @param {object} fields
+     * @param {string} path
+     * @returns {string} Endpoint.
      */
     getUrl(fields = {}, path = '') {
         let url = this.baseUrl;
@@ -189,24 +188,24 @@ class Vrac {
     }
 
     /**
-     * Add a child module to this model
+     * Add a child module to this model.
      *
-     * @param {String} name - Name of the child model
-     * @param {Object|Vrac} child - Vrac constructor options or Vrac object
+     * @param {string} name - Name of the child model.
+     * @param {object|Vrac} child - Vrac constructor options or Vrac object.
      */
     child(name, child) {
-        this.children[name] =
-            child instanceof Vrac
+        this.children[name]
+            = child instanceof Vrac
                 ? child
                 : new Vrac(child);
     }
 
     /**
-     * Get the default parser
+     * Get the default parser.
      *
-     * @param {Object} options
-     * @param {Boolean} options.identified - Whether this is a parser for an identified API call or not
-     * @param {Boolean} options.binary - Whether this is a parser for a binary API call or not
+     * @param {object} options
+     * @param {boolean} options.identified - Whether this is a parser for an identified API call or not.
+     * @param {boolean} options.binary - Whether this is a parser for a binary API call or not.
      *
      * @returns {Function}
      */
@@ -219,11 +218,11 @@ class Vrac {
     }
 
     /**
-     * Get the default cacher
+     * Get the default cacher.
      *
-     * @param {Object} options
-     * @param {Boolean} options.identified - Whether this is a cacher for an identified API call or not
-     * @param {Boolean} options.binary - Whether this is a cacher for a binary API call or not
+     * @param {object} options
+     * @param {boolean} options.identified - Whether this is a cacher for an identified API call or not.
+     * @param {boolean} options.binary - Whether this is a cacher for a binary API call or not.
      *
      * @returns {Function}
      */
@@ -236,18 +235,18 @@ class Vrac {
     }
 
     /**
-     * Create an action for an endpoint
+     * Create an action for an endpoint.
      *
-     * @param {String} name - Name of the action
-     * @param {Object} options
-     * @param {String} options.method - HTTP method for the call
-     * @param {Function} options.parser - Function used to parse the data from the API response
-     * @param {Function} options.cacher - Function used to cache the model from the response
-     * @param {Boolean} options.identified - Whether this endpoint needs an identifier field or not, e.g. `id`
-     * @param {Boolean} options.readCache - Whether this action should return from the cache if the model exists there
-     * @param {String} options.path - Path for this callback, appended to baseUrl
-     * @param {Boolean} options.binary - Whether this is a binary model or not
-     * @param {String} options.responseType - Override responseType, by default this is `undefined` for normal models, and `arraybuffer` for binary models
+     * @param {string} name - Name of the action.
+     * @param {object} options
+     * @param {string} options.method - HTTP method for the call.
+     * @param {Function} options.parser - Function used to parse the data from the API response.
+     * @param {Function} options.cacher - Function used to cache the model from the response.
+     * @param {boolean} options.identified - Whether this endpoint needs an identifier field or not, e.g. `id`.
+     * @param {boolean} options.readCache - Whether this action should return from the cache if the model exists there.
+     * @param {string} options.path - Path for this callback, appended to baseUrl.
+     * @param {boolean} options.binary - Whether this is a binary model or not.
+     * @param {string} options.responseType - Override responseType, by default this is `undefined` for normal models, and `arraybuffer` for binary models.
      */
     createCall(name, {
         method = 'get',
@@ -273,13 +272,13 @@ class Vrac {
     }
 
     /**
-     * Instantiate a model class using the helpers if they exist
+     * Instantiate a model class using the helpers if they exist.
      *
-     * @param {Object} fieldsOrData
-     * @param {Object} options
-     * @param {Boolean} options.binary - Whether this is a binary model or not
+     * @param {object} fieldsOrData
+     * @param {object} options
+     * @param {boolean} options.binary - Whether this is a binary model or not.
      *
-     * @returns {Object} model
+     * @returns {object} Model.
      */
     createModel(fieldsOrData, { binary }) {
         if (binary) {
@@ -290,9 +289,9 @@ class Vrac {
     }
 
     /**
-     * Get child modules for this store
+     * Get child modules for this store.
      *
-     * @returns {Object} modules
+     * @returns {object} Modules.
      */
     get modules() {
         const modules = {};
@@ -305,9 +304,9 @@ class Vrac {
     }
 
     /**
-     * Get the default state for this module
+     * Get the default state for this module.
      *
-     * @returns {Object} state
+     * @returns {object} State.
      */
     get state() {
         return {
@@ -317,9 +316,9 @@ class Vrac {
     }
 
     /**
-     * Get the mutators for this module
+     * Get the mutators for this module.
      *
-     * @returns {Object} mutators
+     * @returns {object} Mutators.
      */
     get mutations() {
         return {
@@ -332,7 +331,7 @@ class Vrac {
 
             destroy: (state, model) => {
                 state.index = state.index.filter(
-                    m => m[this.identifier] !== model[this.identifier]
+                    m => m[this.identifier] !== model[this.identifier],
                 );
             },
 
@@ -340,7 +339,7 @@ class Vrac {
                 state.actionsLoading = Object.assign(
                     {},
                     state.actionsLoading,
-                    { [action]: (state.actionsLoading[action] || 0) + 1 }
+                    { [action]: (state.actionsLoading[action] || 0) + 1 },
                 );
             },
 
@@ -348,23 +347,23 @@ class Vrac {
                 state.actionsLoading = Object.assign(
                     {},
                     state.actionsLoading,
-                    { [action]: state.actionsLoading[action] - 1 }
+                    { [action]: state.actionsLoading[action] - 1 },
                 );
             },
         };
     }
 
     /**
-     * Get the getters for this module
+     * Get the getters for this module.
      *
-     * @returns {Object} getters
+     * @returns {object} Getters.
      */
     get getters() {
         return {
             index: ({ index }) => index,
 
             read: (state, getters) => identifier => getters.index.find(
-                m => m[this.identifier] === identifier
+                m => m[this.identifier] === identifier,
             ),
 
             loading: ({ actionsLoading }) => {
@@ -374,9 +373,9 @@ class Vrac {
     }
 
     /**
-     * Get the actions for this module
+     * Get the actions for this module.
      *
-     * @returns {Object} actions
+     * @returns {object} Actions.
      */
     get actions() {
         const actions = {};
@@ -384,13 +383,13 @@ class Vrac {
 
         this.calls.forEach(call => {
             actions[call.name] = async function(context, {
-                    fields = {},
-                    params = {},
-                    method = call.method,
-                    readCache = call.readCache,
-                    path = call.path,
-                    responseType = call.responseType,
-                } = {}) {
+                fields = {},
+                params = {},
+                method = call.method,
+                readCache = call.readCache,
+                path = call.path,
+                responseType = call.responseType,
+            } = {}) {
                 if (call.identified) {
                     if ([null, undefined].includes(fields[self.identifier])) {
                         throw new Error(`The '${ call.name }' action requires a 'fields.${ self.identifier }' option`);
@@ -459,9 +458,9 @@ class Vrac {
     }
 
     /**
-     * Get the entire store for this module, for Vuex
+     * Get the entire store for this module, for Vuex.
      *
-     * @returns {Object} store
+     * @returns {object} Store.
      */
     get store() {
         const { actions, getters, mutations, state, modules } = this;

@@ -1,11 +1,12 @@
 import { BaseModel } from '~/index';
 
 /**
- * Basic model
+ * Basic model.
  */
 class Model extends BaseModel {
     /**
-     * Basic method
+     * Basic method.
+     *
      * @returns {*}
      */
     something() {

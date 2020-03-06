@@ -1,8 +1,8 @@
 /**
- * Add the model to the cache
+ * Add the model to the cache.
  *
- * @param {Object} context
- * @param {Object} model
+ * @param {object} context
+ * @param {object} model
  */
 export default function({ commit }, model) {
     commit('createOrUpdate', model);
