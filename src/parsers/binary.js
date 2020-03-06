@@ -1,8 +1,8 @@
 /**
- * Parse the data from the API to get the binary data
+ * Parse the data from the API to get the binary data.
  *
- * @param {Object} data - Data from the API
- * @returns {Object}
+ * @param {object} data - Data from the API.
+ * @returns {object}
  */
 export default function(data) {
     return {

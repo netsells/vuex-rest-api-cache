@@ -4,8 +4,7 @@ jobs:
   include:
     - stage: lint
       script:
-        - yarn run lint:js
-        - yarn run lint:spec
+        - yarn run lint
         - yarn run jsdoc
     - stage: test
       script:

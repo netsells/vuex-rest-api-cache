@@ -5,10 +5,10 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 /**
- * Format data for a response
+ * Format data for a response.
  *
- * @param {Object} data
- * @returns {String} body
+ * @param {object} data
+ * @returns {string} Body.
  */
 const createJsonResponse = data => JSON.stringify({
     data,
