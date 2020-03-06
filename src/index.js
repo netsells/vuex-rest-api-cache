@@ -1,25 +1,23 @@
-import Vrac from './Vrac';
-import parseMultiple from './parsers/multiple';
-import parseSingle from './parsers/single';
-import parseBinary from './parsers/binary';
+import Vrac from './Vrac/index';
+import cacheMultiple from './Vrac/cachers/multiple';
+import cacheSingle from './Vrac/cachers/single';
+import cacheDestroy from './Vrac/cachers/destroy';
+import cacheBinary from './Vrac/cachers/binary';
 
-import cacheMultiple from './cachers/multiple';
-import cacheSingle from './cachers/single';
-import cacheDestroy from './cachers/destroy';
-import cacheBinary from './cachers/binary';
+import Vra from './Vra/index';
+import parseMultiple from './Vra/parsers/multiple';
+import parseSingle from './Vra/parsers/single';
+import parseBinary from './Vra/parsers/binary';
 
-import BaseModel from './base-model';
-
-export default Vrac;
 export {
+    Vra,
     parseSingle,
     parseMultiple,
     parseBinary,
 
+    Vrac,
     cacheMultiple,
     cacheSingle,
     cacheDestroy,
     cacheBinary,
-
-    BaseModel,
 };

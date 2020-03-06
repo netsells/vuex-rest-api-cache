@@ -4,7 +4,7 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
-import Vrac from '~/Vrac/index';
+import { Vrac } from '~/index';
 
 Vue.use(Vuex);
 

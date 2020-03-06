@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Vrac from '~/Vrac/index';
+import { Vrac } from '~/index';
 
 describe('Vrac', () => {
     let instance;

@@ -4,7 +4,7 @@ import axios from 'axios';
 import fs from 'fs';
 import path from 'path';
 
-import Vra from '~/Vra/index';
+import { Vra } from '~/index';
 
 /**
  * Example BaseModel.
