@@ -1,6 +1,6 @@
 {
   "name": "@netsells/vuex-rest-api-cache",
-  "version": "2.7.3",
+  "version": "3.0.0",
   "description": "Vuex Rest API action creator and cacher",
   "main": "dist/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "test:watch": "start-server-and-test test-api http://localhost:3000 jest:watch",
     "test:mutate": "start-server-and-test test-api http://localhost:3000 jest:mutate",
     "lint": "eslint src spec --max-warnings 0",
-    "docs": "jsdoc src",
+    "docs": "jsdoc src/Vrac src/Vra",
     "build": "babel src -d dist",
     "prepublishOnly": "yarn build"
   },

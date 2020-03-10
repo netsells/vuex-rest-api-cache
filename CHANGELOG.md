@@ -1,5 +1,12 @@
 # CHANGELOG.md
 
+## 3.0.0 (unreleased)
+
+- Added a Vra class export which has the same API, without any state related logic (caching/loading etc.)
+- Vrac export is no longer default
+- Removed `Model` option, now uses a `toModel` function.
+- `BaseModel` has been removed.
+
 ## 2.7.3 (2019-12-13)
 
 - Fix falsy IDs not being set correctly on read requests
