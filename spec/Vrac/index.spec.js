@@ -258,6 +258,21 @@ describe('Vrac', () => {
                 expect(names).toContain('destroy');
             });
         });
+
+        describe('state', () => {
+            it('is a function', () => {
+                expect(instance.state).toEqual(expect.any(Function));
+            });
+
+            it('returns initial states', () => {
+                const states = [
+                    instance.state(),
+                    instance.state(),
+                ];
+
+                expect(states[0]).not.toBe(states[1]);
+            });
+        });
     });
 
     describe('child instance', () => {

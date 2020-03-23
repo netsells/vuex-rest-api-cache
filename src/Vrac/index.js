@@ -91,10 +91,10 @@ class Vrac extends Vra {
      * @returns {object} State.
      */
     get state() {
-        return {
+        return () => ({
             index: [],
             actionsLoading: {},
-        };
+        });
     }
 
     /**
