@@ -310,10 +310,10 @@ class Vrac {
      * @returns {Object} state
      */
     get state() {
-        return {
+        return () => ({
             index: [],
             actionsLoading: {},
-        };
+        });
     }
 
     /**
