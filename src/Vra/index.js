@@ -50,10 +50,11 @@ class Vra {
      * @returns {object} - Namespaced Vuex modules.
      */
     static createModules(modules) {
+        const Klass = this;
         const generated = {};
 
         Object.keys(modules).forEach(name => {
-            generated[name] = new Vra(modules[name]).store;
+            generated[name] = new Klass(modules[name]).store;
         });
 
         return generated;
