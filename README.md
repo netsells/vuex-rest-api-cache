@@ -11,6 +11,8 @@
 This module makes it easier to create Vuex store actions, mutators, getters and
 state for communicating with rest APIs.
 
+It is created and maintained by the [Netsells team](https://netsells.co.uk/)
+
 ## Installation
 
 ```sh
